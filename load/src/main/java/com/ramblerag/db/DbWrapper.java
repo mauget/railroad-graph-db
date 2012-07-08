@@ -8,6 +8,7 @@ import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.graphdb.index.Index;
+import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.tooling.GlobalGraphOperations;
 
 import com.ramblerag.domain.Domain;
@@ -16,25 +17,26 @@ import com.ramblerag.domain.Nod;
 
 public class DbWrapper {
 
+	private static final String PROP_NODE_ID = "prop_node_id";
 	private static final String PROP_RAILROAD = "prop_railroad";
 	private static final String PROP_LONGITUDE = "prop_longitude";
 	private static final String PROP_LATITUDE = "prop_latitude";
 	private static final double SCALE_1E_6 = 1e-6;
-	private static final String PROP_NODE_ID = "prop_node_id";
 	private static Logger logger = Logger.getLogger(DbWrapper.class);
 	private static final String DB_PATH = "var/graphDb";
 	private static final String INDEX_NAME = "nodes";
 	private GraphDatabaseService graphDb;
+	Node nodsReferenceNode;
 
-	public enum RelTypes implements RelationshipType {
-		DOMAIN_NODE, DOMAIN_LINK
+	private static enum RelTypes implements RelationshipType {
+		DOMAIN_NODE, DOMAIN_LINK, NODS_REFERENCE
 	}
 
 	// Index of all nodes
 	private Index<Node> nodeIndex;
 
 	// Holds a ref to every node
-//	private Node referenceNode;
+	// private Node referenceNode;
 
 	private static DbWrapper instance;
 
@@ -49,9 +51,9 @@ public class DbWrapper {
 	}
 
 	public void removeAll() throws ApplicationException {
-		
+
 		logger.info("Removing all nodes and references.");
-		
+
 		Transaction tx = graphDb.beginTx();
 		try {
 			GlobalGraphOperations ops = GlobalGraphOperations.at(graphDb);
@@ -62,11 +64,11 @@ public class DbWrapper {
 			for (Node node : ops.getAllNodes()) {
 				node.delete();
 			}
-//			referenceNode = null;
+			// referenceNode = null;
 
 			// Index has refs to non-existent nodes. Just renew the index.
-			nodeIndex = graphDb.index().forNodes(INDEX_NAME);
-			//nodeIndex.delete();
+//			nodeIndex = graphDb.index().forNodes(INDEX_NAME);
+			// nodeIndex.delete();
 
 			tx.success();
 			logger.info("Deleted all relationships and nodes");
@@ -92,11 +94,31 @@ public class DbWrapper {
 		});
 	}
 
-	public void startDb() {
+	public void startDb() throws ApplicationException {
 		graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(DB_PATH);
-		registerShutdownHook(graphDb);
 		nodeIndex = graphDb.index().forNodes(INDEX_NAME);
-//		getReferenceNode();
+		registerShutdownHook(graphDb);
+		
+	//	initRefs();
+	}
+
+	public void initRefs() throws ApplicationException {
+		Transaction tx = graphDb.beginTx();
+		try {
+			// Create railroad Nods sub reference node
+			nodsReferenceNode = graphDb.createNode();
+			
+			//Node rn = graphDb.getReferenceNode();
+//			nodsReferenceNode.createRelationshipTo(nodsReferenceNode,
+//					RelTypes.NODS_REFERENCE);
+		} catch (Exception e) {
+			logger.error(e.toString());
+			tx.failure();
+			throw new ApplicationException(e);
+		} finally {
+			tx.finish();
+		}
+		
 	}
 
 	public void shutdownDb() {
@@ -111,29 +133,33 @@ public class DbWrapper {
 		}
 	}
 
-	private Node createAndIndexNode(final Nod domainNode) throws ApplicationException {
+	private Node createAndIndexNode(final Nod domainNode)
+			throws ApplicationException {
 		Transaction tx = graphDb.beginTx();
 		Node node = null;
+		long nodID = -1;
 		try {
 			node = graphDb.createNode();
-			
-			Integer id = Integer.parseInt(domainNode.getNodeId().trim());
-			Double lat = Double.parseDouble(domainNode.getLatitude().trim())*SCALE_1E_6;
-			Double lon = Double.parseDouble(domainNode.getLongitude().trim())*SCALE_1E_6;
+
+			nodID = Long.parseLong(domainNode.getNodeId().trim());
+			double lat = Double.parseDouble(domainNode.getLatitude().trim())
+					* SCALE_1E_6;
+			double lon = Double.parseDouble(domainNode.getLongitude().trim())
+					* SCALE_1E_6;
 			String railroad = domainNode.getDescription().trim();
-			
-			node.setProperty(PROP_NODE_ID, id);
+
+			node.setProperty(PROP_NODE_ID, nodID);
 			node.setProperty(PROP_LATITUDE, lat);
 			node.setProperty(PROP_LONGITUDE, lon);
 			node.setProperty(PROP_RAILROAD, railroad);
 
-			nodeIndex.putIfAbsent(node, PROP_NODE_ID, id);
+			nodeIndex.add(node, PROP_NODE_ID, nodID);
 			
-			Node node2 = nodeIndex.get(PROP_NODE_ID, id).getSingle();
-			if (null == node2 || !node2.equals(node)){
-				throw new ApplicationException(String.format("Node %s null or not equal to node %s", node, node2));
-			}
-		//	graphDb.getReferenceNode().createRelationshipTo(node, RelTypes.PROP_NODE_ID);
+//			if (null == nodsReferenceNode){
+//				nodsReferenceNode = graphDb.createNode(); // temp
+//			}
+//			nodsReferenceNode.createRelationshipTo(node, RelTypes.DOMAIN_NODE );
+			
 		} catch (Exception e) {
 			logger.error(e.toString());
 			tx.failure();
@@ -142,25 +168,42 @@ public class DbWrapper {
 			tx.finish();
 		}
 
+
+		// Debug assertion
+//		IndexHits<Node> hits = nodeIndex.get(PROP_NODE_ID, nodID); // graphDb.getNodeById(id);
+//		Node node2 = hits.getSingle();
+//		// Node node2 = nodeIndex.get(PROP_NODE_ID, id).getSingle();
+//		if (null == node2 || !node2.equals(node)) {
+//			throw new ApplicationException(String.format(
+//					"Node %s null or not equal to node %s", node, node2));
+//		}
 		return node;
 	}
-	
-	private void createLink(final Lnk domainNode) throws ApplicationException {
+
+	private void createLink(final Lnk domainLink) throws ApplicationException {
 		Transaction tx = graphDb.beginTx();
 		Node nodeA = null;
 		Node nodeB = null;
 		try {
-			Integer keyValueA = Integer.parseInt(domainNode.getaNode().trim());
-			Integer keyValueB = Integer.parseInt(domainNode.getbNode().trim());
+			if (!graphDb.index().existsForNodes(INDEX_NAME)){
+				//nodeIndex = graphDb.index().forNodes(INDEX_NAME);
+				throw new ApplicationException("Nodes index missing");
+			}
+			
+			long keyValueA = Long.parseLong(domainLink.getaNode().trim());
+			long keyValueB = Long.parseLong(domainLink.getbNode().trim());
 
 			nodeA = nodeIndex.get(PROP_NODE_ID, keyValueA).getSingle();
 			nodeB = nodeIndex.get(PROP_NODE_ID, keyValueB).getSingle();
 
 			if (null == nodeA || null == nodeB) {
-				throw new ApplicationException(String.format("Link referenced %s A-Node with key %d, and the link referenced %s B-Node with key %d", nodeA, keyValueA, nodeB, keyValueB));
+				throw new ApplicationException(
+						String.format(
+								"Link referenced %s A-Node with key %d, and the link referenced %s B-Node with key %d",
+								nodeA, keyValueA, nodeB, keyValueB));
 			}
-			
-			nodeA.createRelationshipTo(nodeB, RelTypes.DOMAIN_LINK	);
+
+			nodeA.createRelationshipTo(nodeB, RelTypes.DOMAIN_LINK);
 
 		} catch (Exception e) {
 			logger.error(e.toString());
@@ -170,19 +213,19 @@ public class DbWrapper {
 			tx.finish();
 		}
 	}
-	
-//	private Node getReferenceNode() {
-//		if (null == referenceNode) {
-//			Transaction tx = graphDb.beginTx();
-//			try {
-//				referenceNode = graphDb.getReferenceNode();
-//			} catch (Exception e) {
-//				logger.error(e.toString());
-//				tx.failure();
-//			} finally {
-//				tx.finish();
-//			}
-//		}
-//		return referenceNode;
-//	}
+
+	// private Node getReferenceNode() {
+	// if (null == referenceNode) {
+	// Transaction tx = graphDb.beginTx();
+	// try {
+	// referenceNode = graphDb.getReferenceNode();
+	// } catch (Exception e) {
+	// logger.error(e.toString());
+	// tx.failure();
+	// } finally {
+	// tx.finish();
+	// }
+	// }
+	// return referenceNode;
+	// }
 }

@@ -49,5 +49,10 @@
 			<version>${neo4j-version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>lucene</groupId>
+			<artifactId>lucene</artifactId>
+			<version>1.4.3</version>
+		</dependency>
 	</dependencies>
 </project>

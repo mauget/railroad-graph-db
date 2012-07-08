@@ -18,6 +18,7 @@ import com.ramblerag.domain.Nod;
 
 /**
  * Load a graph database from E00 railroad data
+ * See http://www.bts.gov/publications/national_transportation_atlas_database/2011/
  * 
  */
 public class Load {
@@ -35,7 +36,8 @@ public class Load {
 	public void load(String nodeFileName, String linkFileName) throws ApplicationException {
 		DbWrapper dbw = DbWrapper.getInstance(); 
 		dbw.startDb();
-		dbw.removeAll();
+		//dbw.removeAll();
+		dbw.initRefs();
 		
 		loadFlatFile(Nod.class, nodeFileName);
 		loadFlatFile(Lnk.class, linkFileName);
