@@ -154,7 +154,8 @@ public class DbWrapper {
 			node.setProperty(PROP_LONGITUDE, lon);
 			node.setProperty(PROP_RAILROAD, railroad);
 
-			nodeIndex.add(node, PROP_NODE_ID, nodID);
+			nodeIndex.putIfAbsent(node, PROP_NODE_ID, nodID);
+			//nodeIndex.add(node, PROP_NODE_ID, nodID);
 			
 //			if (null == nodsReferenceNode){
 //				nodsReferenceNode = graphDb.createNode(); // temp
@@ -188,10 +189,10 @@ public class DbWrapper {
 		Node nodeA = null;
 		Node nodeB = null;
 		try {
-			if (!graphDb.index().existsForNodes(INDEX_NAME)){
-				//nodeIndex = graphDb.index().forNodes(INDEX_NAME);
-				throw new ApplicationException("Nodes index missing");
-			}
+//			if (!graphDb.index().existsForNodes(INDEX_NAME)){
+//				//nodeIndex = graphDb.index().forNodes(INDEX_NAME);
+//				throw new ApplicationException("Nodes index missing");
+//			}
 			
 			long keyValueA = Long.parseLong(domainLink.getaNode().trim());
 			long keyValueB = Long.parseLong(domainLink.getbNode().trim());

@@ -54,6 +54,15 @@ public class Load {
 
 	}
 
+	/**
+	 * Overloaded to load either a transportation "Nod" domain file or a "Link"
+	 * domain file. Delegates to db wrapper to determine insertion
+	 * implementation specific to each.
+	 * 
+	 * @param clazz
+	 * @param flatFileName
+	 * @throws ApplicationException
+	 */
 	private <T> void loadFlatFile(Class<T> clazz, String flatFileName)
 			throws ApplicationException {
 
@@ -69,10 +78,11 @@ public class Load {
 			br = new BufferedReader(new InputStreamReader(ins));
 			String record;
 
-			log.info("Reading records.");
+			log.info("Reading, inserting records.");
 			while (null != (record = br.readLine())) {
 				Domain obj = (Domain) manager.load(clazz, record);
-				log.info(String.format("Record %s", obj));
+//				log.info(String.format("Record %s", obj));
+//				log.info(String.format("%s: key %d", obj.getRecType(), obj.getDomainId()));
 				DbWrapper.getInstance().insert(obj);
 				count++;
 			}
