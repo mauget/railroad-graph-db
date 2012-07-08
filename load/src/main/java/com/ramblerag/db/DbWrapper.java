@@ -22,7 +22,7 @@ public class DbWrapper {
 	private static final String PROP_LONGITUDE = "prop_longitude";
 	private static final String PROP_LATITUDE = "prop_latitude";
 	private static final double SCALE_1E_6 = 1e-6;
-	private static Logger logger = Logger.getLogger(DbWrapper.class);
+	private static Logger log = Logger.getLogger(DbWrapper.class);
 	private static final String DB_PATH = "var/graphDb";
 	private static final String INDEX_NAME = "nodes";
 	private GraphDatabaseService graphDb;
@@ -52,7 +52,7 @@ public class DbWrapper {
 
 	public void removeAll() throws ApplicationException {
 
-		logger.info("Removing all nodes and references.");
+		log.info("Removing all nodes and references.");
 
 		Transaction tx = graphDb.beginTx();
 		try {
@@ -71,10 +71,10 @@ public class DbWrapper {
 			// nodeIndex.delete();
 
 			tx.success();
-			logger.info("Deleted all relationships and nodes");
+			log.info("Deleted all relationships and nodes");
 
 		} catch (Exception e) {
-			logger.error(e.toString());
+			log.error(e.toString());
 			tx.failure();
 			throw new ApplicationException(e);
 		} finally {
@@ -94,12 +94,13 @@ public class DbWrapper {
 		});
 	}
 
-	public void startDb() throws ApplicationException {
+	public GraphDatabaseService startDb() throws ApplicationException {
 		graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(DB_PATH);
 		nodeIndex = graphDb.index().forNodes(INDEX_NAME);
 		registerShutdownHook(graphDb);
 		
 	//	initRefs();
+		return graphDb;
 	}
 
 	public void initRefs() throws ApplicationException {
@@ -109,10 +110,10 @@ public class DbWrapper {
 			nodsReferenceNode = graphDb.createNode();
 			
 			//Node rn = graphDb.getReferenceNode();
-//			nodsReferenceNode.createRelationshipTo(nodsReferenceNode,
-//					RelTypes.NODS_REFERENCE);
+			nodsReferenceNode.createRelationshipTo(nodsReferenceNode,
+					RelTypes.NODS_REFERENCE);
 		} catch (Exception e) {
-			logger.error(e.toString());
+			log.error(e.toString());
 			tx.failure();
 			throw new ApplicationException(e);
 		} finally {
@@ -160,8 +161,10 @@ public class DbWrapper {
 //			}
 //			nodsReferenceNode.createRelationshipTo(node, RelTypes.DOMAIN_NODE );
 			
+			tx.success();
+			
 		} catch (Exception e) {
-			logger.error(e.toString());
+			log.error(e.toString());
 			tx.failure();
 			throw new ApplicationException(e);
 		} finally {
@@ -202,11 +205,18 @@ public class DbWrapper {
 								"Link referenced %s A-Node with key %d, and the link referenced %s B-Node with key %d",
 								nodeA, keyValueA, nodeB, keyValueB));
 			}
+			
+			log.info(String.format(
+					"Link inserted from  %s A-Node with key %d, to the link referenced %s B-Node with key %d",
+					nodeA, keyValueA, nodeB, keyValueB));
+
 
 			nodeA.createRelationshipTo(nodeB, RelTypes.DOMAIN_LINK);
 
+			tx.success();
+			
 		} catch (Exception e) {
-			logger.error(e.toString());
+			log.error(e.toString());
 			tx.failure();
 			throw new ApplicationException(e);
 		} finally {

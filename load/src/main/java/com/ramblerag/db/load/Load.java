@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.log4j.Logger;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Transaction;
 
 import com.ancientprogramming.fixedformat4j.exception.FixedFormatException;
 import com.ancientprogramming.fixedformat4j.format.FixedFormatManager;
@@ -17,8 +19,8 @@ import com.ramblerag.domain.Lnk;
 import com.ramblerag.domain.Nod;
 
 /**
- * Load a graph database from E00 railroad data
- * See http://www.bts.gov/publications/national_transportation_atlas_database/2011/
+ * Load a graph database from E00 railroad data See
+ * http://www.bts.gov/publications/national_transportation_atlas_database/2011/
  * 
  */
 public class Load {
@@ -33,22 +35,30 @@ public class Load {
 		}
 	}
 
-	public void load(String nodeFileName, String linkFileName) throws ApplicationException {
-		DbWrapper dbw = DbWrapper.getInstance(); 
+	public void load(String nodeFileName, String linkFileName)
+			throws ApplicationException {
+		log.info("Beginning DB load ...");
+		DbWrapper dbw = DbWrapper.getInstance();
+
 		dbw.startDb();
-		//dbw.removeAll();
+
+		dbw.removeAll();
 		dbw.initRefs();
-		
+
 		loadFlatFile(Nod.class, nodeFileName);
 		loadFlatFile(Lnk.class, linkFileName);
-		
+
 		dbw.shutdownDb();
+
+		log.info("... end of DB load");
 
 	}
 
-	private <T> void loadFlatFile(Class<T> clazz, String flatFileName) throws ApplicationException {
+	private <T> void loadFlatFile(Class<T> clazz, String flatFileName)
+			throws ApplicationException {
 
-		log.info(String.format("Loading file %s to object type %s", flatFileName, clazz.toString()));
+		log.info(String.format("Loading file %s to object type %s",
+				flatFileName, clazz.toString()));
 
 		FixedFormatManager manager = new FixedFormatManagerImpl();
 		BufferedReader br = null;
@@ -61,13 +71,14 @@ public class Load {
 
 			log.info("Reading records.");
 			while (null != (record = br.readLine())) {
-				Domain obj = (Domain)manager.load(clazz, record);
+				Domain obj = (Domain) manager.load(clazz, record);
 				log.info(String.format("Record %s", obj));
 				DbWrapper.getInstance().insert(obj);
 				count++;
 			}
-			log.info(String.format("Read %d records from object.", count, clazz.toString()));
-			
+			log.info(String.format("Read %d records from object.", count,
+					clazz.toString()));
+
 		} catch (FixedFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
