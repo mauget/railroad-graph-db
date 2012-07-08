@@ -43,11 +43,11 @@ public class IndexDumper {
 		out.writeCharacters(dir);
 		out.writeEndElement();
 		
-		out.writeStartElement("document-count");
+		out.writeStartElement("node-count");
 		out.writeCharacters(String.format("%d", reader.numDocs()));
 		out.writeEndElement();
 		
-		out.writeStartElement("documents");
+		out.writeStartElement("nodes");
 		for (int i = 0; i < reader.numDocs(); i++) {
 			dumpDocument(reader.document(i), out);
 		}
