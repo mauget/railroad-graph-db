@@ -1,6 +1,7 @@
 package com.ramblerag.db;
 
 import org.apache.log4j.Logger;
+
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
@@ -8,29 +9,20 @@ import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.graphdb.index.Index;
-import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.tooling.GlobalGraphOperations;
 
+import com.ramblerag.domain.*;
 import com.ramblerag.domain.Domain;
 import com.ramblerag.domain.Lnk;
 import com.ramblerag.domain.Nod;
 
 public class DbWrapper {
 
-	private static final String PROP_NODE_ID = "prop_node_id";
-	private static final String PROP_RAILROAD = "prop_railroad";
-	private static final String PROP_LONGITUDE = "prop_longitude";
-	private static final String PROP_LATITUDE = "prop_latitude";
 	private static final double SCALE_1E_6 = 1e-6;
 	private static Logger log = Logger.getLogger(DbWrapper.class);
 	private static final String DB_PATH = "var/graphDb";
-	private static final String INDEX_NAME = "nodes";
 	private GraphDatabaseService graphDb;
 	Node nodsReferenceNode;
-
-	private static enum RelTypes implements RelationshipType {
-		DOMAIN_NODE, DOMAIN_LINK, NODS_REFERENCE
-	}
 
 	// Index of all nodes
 	private Index<Node> nodeIndex;
@@ -64,11 +56,6 @@ public class DbWrapper {
 			for (Node node : ops.getAllNodes()) {
 				node.delete();
 			}
-			// referenceNode = null;
-
-			// Index has refs to non-existent nodes. Just renew the index.
-//			nodeIndex = graphDb.index().forNodes(INDEX_NAME);
-			// nodeIndex.delete();
 
 			tx.success();
 			log.info("Deleted all relationships and nodes");
@@ -96,10 +83,10 @@ public class DbWrapper {
 
 	public GraphDatabaseService startDb() throws ApplicationException {
 		graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(DB_PATH);
-		nodeIndex = graphDb.index().forNodes(INDEX_NAME);
+		nodeIndex = graphDb.index().forNodes(DomainConstants.INDEX_NAME);
 		registerShutdownHook(graphDb);
-		
-	//	initRefs();
+
+		// initRefs();
 		return graphDb;
 	}
 
@@ -108,10 +95,10 @@ public class DbWrapper {
 		try {
 			// Create railroad Nods sub reference node
 			nodsReferenceNode = graphDb.createNode();
-			
-			//Node rn = graphDb.getReferenceNode();
+
+			// Node rn = graphDb.getReferenceNode();
 			nodsReferenceNode.createRelationshipTo(nodsReferenceNode,
-					RelTypes.NODS_REFERENCE);
+					DomainConstants.RelTypes.NODS_REFERENCE);
 		} catch (Exception e) {
 			log.error(e.toString());
 			tx.failure();
@@ -119,7 +106,7 @@ public class DbWrapper {
 		} finally {
 			tx.finish();
 		}
-		
+
 	}
 
 	public void shutdownDb() {
@@ -148,22 +135,18 @@ public class DbWrapper {
 			double lon = Double.parseDouble(domainNode.getLongitude().trim())
 					* SCALE_1E_6;
 			String railroad = domainNode.getDescription().trim();
+			String stFips = domainNode.getStFIPS();
 
-			node.setProperty(PROP_NODE_ID, nodID);
-			node.setProperty(PROP_LATITUDE, lat);
-			node.setProperty(PROP_LONGITUDE, lon);
-			node.setProperty(PROP_RAILROAD, railroad);
+			node.setProperty(DomainConstants.PROP_NODE_ID, nodID);
+			node.setProperty(DomainConstants.PROP_LATITUDE, lat);
+			node.setProperty(DomainConstants.PROP_LONGITUDE, lon);
+			node.setProperty(DomainConstants.PROP_RAILROAD, railroad);
+			node.setProperty(DomainConstants.PROP_STFIPS, stFips);
 
-			nodeIndex.putIfAbsent(node, PROP_NODE_ID, nodID);
-			//nodeIndex.add(node, PROP_NODE_ID, nodID);
-			
-//			if (null == nodsReferenceNode){
-//				nodsReferenceNode = graphDb.createNode(); // temp
-//			}
-//			nodsReferenceNode.createRelationshipTo(node, RelTypes.DOMAIN_NODE );
-			
+			nodeIndex.add(node, DomainConstants.PROP_NODE_ID, nodID);
+
 			tx.success();
-			
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			tx.failure();
@@ -172,15 +155,6 @@ public class DbWrapper {
 			tx.finish();
 		}
 
-
-		// Debug assertion
-//		IndexHits<Node> hits = nodeIndex.get(PROP_NODE_ID, nodID); // graphDb.getNodeById(id);
-//		Node node2 = hits.getSingle();
-//		// Node node2 = nodeIndex.get(PROP_NODE_ID, id).getSingle();
-//		if (null == node2 || !node2.equals(node)) {
-//			throw new ApplicationException(String.format(
-//					"Node %s null or not equal to node %s", node, node2));
-//		}
 		return node;
 	}
 
@@ -189,16 +163,13 @@ public class DbWrapper {
 		Node nodeA = null;
 		Node nodeB = null;
 		try {
-//			if (!graphDb.index().existsForNodes(INDEX_NAME)){
-//				//nodeIndex = graphDb.index().forNodes(INDEX_NAME);
-//				throw new ApplicationException("Nodes index missing");
-//			}
-			
 			long keyValueA = Long.parseLong(domainLink.getaNode().trim());
 			long keyValueB = Long.parseLong(domainLink.getbNode().trim());
 
-			nodeA = nodeIndex.get(PROP_NODE_ID, keyValueA).getSingle();
-			nodeB = nodeIndex.get(PROP_NODE_ID, keyValueB).getSingle();
+			nodeA = nodeIndex.get(DomainConstants.PROP_NODE_ID, keyValueA)
+					.getSingle();
+			nodeB = nodeIndex.get(DomainConstants.PROP_NODE_ID, keyValueB)
+					.getSingle();
 
 			if (null == nodeA || null == nodeB) {
 				throw new ApplicationException(
@@ -206,16 +177,16 @@ public class DbWrapper {
 								"Link referenced %s A-Node with key %d, and the link referenced %s B-Node with key %d",
 								nodeA, keyValueA, nodeB, keyValueB));
 			}
-			
-			log.info(String.format(
-					"Link inserted from  %s A-Node with key %d, to the link referenced %s B-Node with key %d",
-					nodeA, keyValueA, nodeB, keyValueB));
 
+			log.info(String
+					.format("Link inserted from  %s A-Node with key %d, to the link referenced %s B-Node with key %d",
+							nodeA, keyValueA, nodeB, keyValueB));
 
-			nodeA.createRelationshipTo(nodeB, RelTypes.DOMAIN_LINK);
+			nodeA.createRelationshipTo(nodeB,
+					DomainConstants.RelTypes.DOMAIN_LINK);
 
 			tx.success();
-			
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			tx.failure();
@@ -225,18 +196,4 @@ public class DbWrapper {
 		}
 	}
 
-	// private Node getReferenceNode() {
-	// if (null == referenceNode) {
-	// Transaction tx = graphDb.beginTx();
-	// try {
-	// referenceNode = graphDb.getReferenceNode();
-	// } catch (Exception e) {
-	// logger.error(e.toString());
-	// tx.failure();
-	// } finally {
-	// tx.finish();
-	// }
-	// }
-	// return referenceNode;
-	// }
 }
