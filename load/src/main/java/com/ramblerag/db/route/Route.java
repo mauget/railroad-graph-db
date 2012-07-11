@@ -13,6 +13,7 @@ import org.neo4j.graphdb.Expander;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Path;
+import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.kernel.Traversal;
@@ -31,8 +32,13 @@ public class Route {
 
 	private final EstimateEvaluator<Double> estimateEval = CommonEvaluators.geoEstimateEvaluator(
 			DomainConstants.PROP_LATITUDE, DomainConstants.PROP_LONGITUDE );
-	
-    private final CostEvaluator<Double> costEval = CommonEvaluators.doubleCostEvaluator( "undefined_key", 1 );
+
+    private final CostEvaluator<Double> costEval = new CostEvaluator<Double>() {
+
+    	// Constant cost. Could be a function of lading type, location, fuel surcharge, ..
+		public Double getCost(Relationship relationship, Direction direction) {
+			return 1d;
+		}};
 
 	public static void main(String[] args) {
 		try {
@@ -41,7 +47,7 @@ public class Route {
 //			new Route().route(System.out, 1000, 8000);
 //			new Route().route(System.out, 1, 133752);
 //			new Route().route(System.out, 11000, 2400);
-			new Route().route(System.out, 1234, 4321);
+			new Route().route(System.out, 8000, 2000);
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
