@@ -47,7 +47,8 @@ public class Route {
 //			new Route().route(System.out, 1000, 8000);
 //			new Route().route(System.out, 1, 133752);
 //			new Route().route(System.out, 11000, 2400);
-			new Route().route(System.out, 8000, 2000);
+//			new Route().route(System.out, 8000, 2000);
+			new Route().route(System.out, 13000, 123);
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
