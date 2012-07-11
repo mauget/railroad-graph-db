@@ -37,7 +37,11 @@ public class Route {
 	public static void main(String[] args) {
 		try {
 			// Dumps to System.out PrintStream, but caller can supply any PrintStream
-			new Route().route(System.out, 1, 133752);
+//			new Route().route(System.out, 1, 2000);
+//			new Route().route(System.out, 1000, 8000);
+//			new Route().route(System.out, 1, 133752);
+//			new Route().route(System.out, 11000, 2400);
+			new Route().route(System.out, 1234, 4321);
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}

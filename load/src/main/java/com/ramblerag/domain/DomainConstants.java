@@ -13,6 +13,7 @@ public final class DomainConstants {
 	public static final String PROP_LATITUDE = "prop_latitude";
 	public static final String PROP_STFIPS = "prop_st_fips";
 	public static final String INDEX_NAME = "nodes";
+	public static final double SCALE_1E_6 = 1e-6;
 
 	public static enum RelTypes implements RelationshipType {
 		DOMAIN_NODE, DOMAIN_LINK, NODS_REFERENCE

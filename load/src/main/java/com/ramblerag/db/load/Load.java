@@ -6,13 +6,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.log4j.Logger;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Transaction;
 
 import com.ancientprogramming.fixedformat4j.exception.FixedFormatException;
 import com.ancientprogramming.fixedformat4j.format.FixedFormatManager;
 import com.ancientprogramming.fixedformat4j.format.impl.FixedFormatManagerImpl;
 import com.ramblerag.db.ApplicationException;
+import com.ramblerag.db.DbInserter;
 import com.ramblerag.db.DbWrapper;
 import com.ramblerag.domain.Domain;
 import com.ramblerag.domain.Lnk;
@@ -37,18 +36,17 @@ public class Load {
 
 	public void load(String nodeFileName, String linkFileName)
 			throws ApplicationException {
+		
 		log.info("Beginning DB load ...");
-		DbWrapper dbw = DbWrapper.getInstance();
-
-		dbw.startDb();
-
-		dbw.removeAll();
-		dbw.initRefs();
+		
+		DbInserter dbi = DbInserter.getInstance();
+		dbi.startDbInserter(new String[]{DbWrapper.DB_PATH});
 
 		loadFlatFile(Nod.class, nodeFileName);
 		loadFlatFile(Lnk.class, linkFileName);
 
-		dbw.shutdownDb();
+		dbi.flushToIndex();
+		dbi.shutdownDbInserter();
 
 		log.info("... end of DB load");
 
@@ -68,7 +66,9 @@ public class Load {
 
 		log.info(String.format("Loading file %s to object type %s",
 				flatFileName, clazz.toString()));
-
+		
+		DbInserter dbi = DbInserter.getInstance();
+		
 		FixedFormatManager manager = new FixedFormatManagerImpl();
 		BufferedReader br = null;
 		int count = 0;
@@ -83,11 +83,15 @@ public class Load {
 				Domain obj = (Domain) manager.load(clazz, record);
 //				log.info(String.format("Record %s", obj));
 //				log.info(String.format("%s: key %d", obj.getRecType(), obj.getDomainId()));
-				DbWrapper.getInstance().insert(obj);
+				
+				dbi.insert(obj);
+				
 				count++;
 			}
 			log.info(String.format("Read %d records from object.", count,
 					clazz.toString()));
+			
+			DbInserter.getInstance().flushToIndex();
 
 		} catch (FixedFormatException e) {
 			e.printStackTrace();

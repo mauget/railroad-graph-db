@@ -30,7 +30,7 @@ public final class KMLConstants {
 	      "<LineString>" +
 	        "<extrude>0</extrude>" +
 	        "<tessellate>1</tessellate>" +
-	        "<altitudeMode>absolute</altitudeMode>" +
+	        "<altitudeMode>clampToGround</altitudeMode>" +
 	        "<coordinates>";
 	
 	// Emit coordinate lon,lat,altitude triplets "here". e.g -115.0001,49.878,2300

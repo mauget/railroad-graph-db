@@ -18,9 +18,8 @@ import com.ramblerag.domain.Nod;
 
 public class DbWrapper {
 
-	private static final double SCALE_1E_6 = 1e-6;
+	public static final String DB_PATH = "var/graphDb";
 	private static Logger log = Logger.getLogger(DbWrapper.class);
-	private static final String DB_PATH = "var/graphDb";
 	private GraphDatabaseService graphDb;
 	Node nodsReferenceNode;
 
@@ -131,9 +130,9 @@ public class DbWrapper {
 
 			nodID = Long.parseLong(domainNode.getNodeId().trim());
 			double lat = Double.parseDouble(domainNode.getLatitude().trim())
-					* SCALE_1E_6;
+					* DomainConstants.SCALE_1E_6;
 			double lon = Double.parseDouble(domainNode.getLongitude().trim())
-					* SCALE_1E_6;
+					* DomainConstants.SCALE_1E_6;
 			String railroad = domainNode.getDescription().trim();
 			String stFips = domainNode.getStFIPS();
 
