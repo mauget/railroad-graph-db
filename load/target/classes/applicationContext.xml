@@ -12,13 +12,21 @@
   </bean>
   
   <bean id="loader" class="com.ramblerag.db.util.Loader">
+  	<property name="dirRemover" ref="dirRemover"></property>
   	<property name="dbWrapper" ref="dbWrapper"></property>
+  	<property name="dbInserter" ref="dbInserter"></property>
   </bean>
   
   <bean id="indexDumper" class="com.ramblerag.db.util.IndexDumper">
   </bean>
   
   <bean id="graphDatabaseFactory" class="org.neo4j.graphdb.factory.GraphDatabaseFactory">
+  </bean>
+  
+  <bean id="dbInserter" class="com.ramblerag.db.core.DbInserter">
+  </bean>
+  
+  <bean id="dirRemover" class="com.ramblerag.db.util.DirRemover">
   </bean>
 
 </beans>

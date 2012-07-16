@@ -12,12 +12,9 @@ import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Expander;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Path;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
-import org.neo4j.graphdb.index.IndexHits;
-import org.neo4j.graphdb.index.IndexManager;
 import org.neo4j.kernel.Traversal;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -38,10 +35,10 @@ public class Router {
 	private DbWrapper dbWrapper;
 
 	// Routing helper functions
-	private final EstimateEvaluator<Double> estimateEval = CommonEvaluators.geoEstimateEvaluator(
+	protected final EstimateEvaluator<Double> estimateEval = CommonEvaluators.geoEstimateEvaluator(
 			DomainConstants.PROP_LATITUDE, DomainConstants.PROP_LONGITUDE );
 
-    private final CostEvaluator<Double> costEval = new CostEvaluator<Double>() {
+	protected final CostEvaluator<Double> costEval = new CostEvaluator<Double>() {
 
     	// Constant cost. Could be a function of lading type, location, fuel surcharge, ..
 		public Double getCost(Relationship relationship, Direction direction) {
@@ -108,16 +105,17 @@ public class Router {
 
 	private void emitCoordinate(PrintStream printSteam, PathFinder<WeightedPath> shortestPath, Node nodeA, Node nodeB) {
 
-		Path path = shortestPath.findSinglePath(nodeA, nodeB);
+		WeightedPath path = shortestPath.findSinglePath(nodeA, nodeB);
 		
-		for (Node node : path.nodes()) {
-			
-			double lat = (Double) node.getProperty(DomainConstants.PROP_LATITUDE);
-			double lon = (Double) node.getProperty(DomainConstants.PROP_LONGITUDE);
-			
-			printSteam.println(String.format("%f,%f,2300", lon, lat));
+		if (null != path){
+			for (Node node : path.nodes()) {
+				
+				double lat = (Double) node.getProperty(DomainConstants.PROP_LATITUDE);
+				double lon = (Double) node.getProperty(DomainConstants.PROP_LONGITUDE);
+				
+				printSteam.println(String.format("%f,%f,2300", lon, lat));
+			}
 		}
-		
 	}
 
 	public DbWrapper getDbWrapper() {

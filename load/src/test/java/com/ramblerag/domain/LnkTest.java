@@ -22,6 +22,8 @@ public class LnkTest {
 	public void test() {
 		Lnk lnk = manager.load(Lnk.class, record);
 		
+		assertEquals(13L, lnk.getDomainId());
+		
 		assertEquals("L", lnk.getRecType());
 		assertEquals("01", lnk.getVersion());
 		assertEquals("", lnk.getRevision());

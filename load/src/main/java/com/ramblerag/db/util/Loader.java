@@ -1,7 +1,6 @@
 package com.ramblerag.db.util;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -31,6 +30,8 @@ public class Loader {
 
 	// Injected
 	private DbWrapper dbWrapper;
+	private DbInserter dbInserter;
+	private DirRemover dirRemover;
 	
 	public static void main(String[] args) {
 
@@ -39,8 +40,8 @@ public class Loader {
 					new String[] { GlobalConstants.APPLICATION_CONTEXT_XML });
 
 			Loader loader = appContext.getBean(Loader.class);
-
-			loader.load("rail100k.nod", "rail100k.lnk");
+			loader.load(GlobalConstants.RAIL100K_NOD, GlobalConstants.RAIL100K_LNK);
+			
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
@@ -50,12 +51,12 @@ public class Loader {
 			throws ApplicationException {
 		
 		log.info("Remove existing DB ...");
-		boolean wasRemoved = removeOldDbIfThere(DbWrapper.DB_PATH);
+		boolean wasRemoved = getDirRemover().removeDirIfExists(DbWrapper.DB_PATH);
 		log.info(String.format("... any existing DB  was %sremoved.", wasRemoved ? "" : "not "));
 		
 		log.info("Beginning DB load ...");
 		
-		DbInserter dbi = DbInserter.getInstance();
+		DbInserter dbi = getDbInserter();
 		dbi.startDbInserter(new String[]{DbWrapper.DB_PATH});
 
 		loadFlatFile(Nod.class, nodeFileName);
@@ -66,36 +67,6 @@ public class Loader {
 
 		log.info("... end of DB load");
 	
-	}
-
-	private boolean removeOldDbIfThere(String dir) {
-		boolean wasDeleted = false;
-		if (null != dir && dir.trim().length() > 0){
-			File dbFolder = new File(dir);
-			if (dbFolder.canWrite() && dbFolder.isDirectory()){
-				
-				wasDeleted = deleteDir(dbFolder);
-			}
-			log.info(String.format("Database at %s found, but not deleted.", dir));
-		} else {
-			log.info(String.format("Database at %s not found.", dir));
-		}
-		return wasDeleted;
-	}
-	
-	private boolean deleteDir(File dir) {
-	    if (dir.isDirectory()) {
-	        String[] children = dir.list();
-	        for (int i=0; i<children.length; i++) {
-	            boolean success = deleteDir(new File(dir, children[i]));
-	            if (!success) {
-	                return false;
-	            }
-	        }
-	    }
-
-	    // The directory is now empty so delete it
-	    return dir.delete();
 	}
 
 	/**
@@ -113,7 +84,7 @@ public class Loader {
 		log.info(String.format("Loading file %s to object type %s",
 				flatFileName, clazz.toString()));
 		
-		DbInserter dbi = DbInserter.getInstance();
+		DbInserter dbi = getDbInserter();
 		
 		FixedFormatManager manager = new FixedFormatManagerImpl();
 		BufferedReader br = null;
@@ -137,7 +108,7 @@ public class Loader {
 			log.info(String.format("Read %d records from object.", count,
 					clazz.toString()));
 			
-			DbInserter.getInstance().flushToIndex();
+			dbi.flushToIndex();
 
 		} catch (FixedFormatException e) {
 			e.printStackTrace();
@@ -160,5 +131,21 @@ public class Loader {
 
 	public void setDbWrapper(DbWrapper dbWrapper) {
 		this.dbWrapper = dbWrapper;
+	}
+
+	public DbInserter getDbInserter() {
+		return dbInserter;
+	}
+
+	public void setDbInserter(DbInserter dbInserter) {
+		this.dbInserter = dbInserter;
+	}
+
+	public DirRemover getDirRemover() {
+		return dirRemover;
+	}
+
+	public void setDirRemover(DirRemover dirRemover) {
+		this.dirRemover = dirRemover;
 	}
 }

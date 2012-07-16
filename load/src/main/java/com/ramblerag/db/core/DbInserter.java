@@ -23,19 +23,10 @@ public class DbInserter {
 	
 	private BatchInserter inserter;
 	
-	private static DbInserter instance;
-
 	// Index of all nodes
 	private BatchInserterIndexProvider indexProvider;
 	private BatchInserterIndex nodeIndex;
 	
-	public static DbInserter getInstance() {
-		if (instance == null){
-			instance = new DbInserter();
-		}
-		return instance;
-	}
-
 	public void insertBulk(String[] args) {
 		if (args.length == 0){
 			args = new String[]{DbWrapper.DB_PATH};

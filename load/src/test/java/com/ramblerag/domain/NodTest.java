@@ -21,6 +21,8 @@ public class NodTest {
 	@Test
 	public void test() {
 		Nod nod = manager.load(Nod.class, record);
+
+		assertEquals(1L, nod.getDomainId());
 		
 		assertEquals("N", nod.getRecType());
 		assertEquals("01", nod.getVersion());
