@@ -1,34 +1,46 @@
-package com.ramblerag.db.load;
+package com.ramblerag.db.util;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ancientprogramming.fixedformat4j.exception.FixedFormatException;
 import com.ancientprogramming.fixedformat4j.format.FixedFormatManager;
 import com.ancientprogramming.fixedformat4j.format.impl.FixedFormatManagerImpl;
-import com.ramblerag.db.ApplicationException;
-import com.ramblerag.db.DbInserter;
-import com.ramblerag.db.DbWrapper;
+import com.ramblerag.db.core.ApplicationException;
+import com.ramblerag.db.core.DbInserter;
+import com.ramblerag.db.core.DbWrapper;
+import com.ramblerag.db.core.GlobalConstants;
 import com.ramblerag.domain.Domain;
 import com.ramblerag.domain.Lnk;
 import com.ramblerag.domain.Nod;
 
 /**
- * Load a graph database from E00 railroad data See
+ * Load a graph database from E00 railroad data. See
  * http://www.bts.gov/publications/national_transportation_atlas_database/2011/
  * 
  */
-public class Load {
+public class Loader {
 
-	private static Logger log = Logger.getLogger(Load.class);
+	private static Logger log = Logger.getLogger(Loader.class);
 
+	// Injected
+	private DbWrapper dbWrapper;
+	
 	public static void main(String[] args) {
+
 		try {
-			new Load().load("rail100k.nod", "rail100k.lnk");
+			ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(
+					new String[] { GlobalConstants.APPLICATION_CONTEXT_XML });
+
+			Loader loader = appContext.getBean(Loader.class);
+
+			loader.load("rail100k.nod", "rail100k.lnk");
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
@@ -36,6 +48,10 @@ public class Load {
 
 	public void load(String nodeFileName, String linkFileName)
 			throws ApplicationException {
+		
+		log.info("Remove existing DB ...");
+		boolean wasRemoved = removeOldDbIfThere(DbWrapper.DB_PATH);
+		log.info(String.format("... any existing DB  was %sremoved.", wasRemoved ? "" : "not "));
 		
 		log.info("Beginning DB load ...");
 		
@@ -49,7 +65,37 @@ public class Load {
 		dbi.shutdownDbInserter();
 
 		log.info("... end of DB load");
+	
+	}
 
+	private boolean removeOldDbIfThere(String dir) {
+		boolean wasDeleted = false;
+		if (null != dir && dir.trim().length() > 0){
+			File dbFolder = new File(dir);
+			if (dbFolder.canWrite() && dbFolder.isDirectory()){
+				
+				wasDeleted = deleteDir(dbFolder);
+			}
+			log.info(String.format("Database at %s found, but not deleted.", dir));
+		} else {
+			log.info(String.format("Database at %s not found.", dir));
+		}
+		return wasDeleted;
+	}
+	
+	private boolean deleteDir(File dir) {
+	    if (dir.isDirectory()) {
+	        String[] children = dir.list();
+	        for (int i=0; i<children.length; i++) {
+	            boolean success = deleteDir(new File(dir, children[i]));
+	            if (!success) {
+	                return false;
+	            }
+	        }
+	    }
+
+	    // The directory is now empty so delete it
+	    return dir.delete();
 	}
 
 	/**
@@ -81,8 +127,8 @@ public class Load {
 			log.info("Reading, inserting records.");
 			while (null != (record = br.readLine())) {
 				Domain obj = (Domain) manager.load(clazz, record);
-//				log.info(String.format("Record %s", obj));
-//				log.info(String.format("%s: key %d", obj.getRecType(), obj.getDomainId()));
+				//log.info(String.format("Record %s", obj));
+				//log.info(String.format("%s: key %d", obj.getRecType(), obj.getDomainId()));
 				
 				dbi.insert(obj);
 				
@@ -106,5 +152,13 @@ public class Load {
 				}
 			}
 		}
+	}
+
+	public DbWrapper getDbWrapper() {
+		return dbWrapper;
+	}
+
+	public void setDbWrapper(DbWrapper dbWrapper) {
+		this.dbWrapper = dbWrapper;
 	}
 }

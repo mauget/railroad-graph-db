@@ -1,18 +1,16 @@
-package com.ramblerag.db;
+package com.ramblerag.db.core;
 
 import org.apache.log4j.Logger;
-
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.tooling.GlobalGraphOperations;
 
-import com.ramblerag.domain.*;
 import com.ramblerag.domain.Domain;
+import com.ramblerag.domain.DomainConstants;
 import com.ramblerag.domain.Lnk;
 import com.ramblerag.domain.Nod;
 
@@ -20,26 +18,14 @@ public class DbWrapper {
 
 	public static final String DB_PATH = "var/graphDb";
 	private static Logger log = Logger.getLogger(DbWrapper.class);
+	
+	private GraphDatabaseFactory graphDatabaseFactory;
 	private GraphDatabaseService graphDb;
+	
 	Node nodsReferenceNode;
 
 	// Index of all nodes
 	private Index<Node> nodeIndex;
-
-	// Holds a ref to every node
-	// private Node referenceNode;
-
-	private static DbWrapper instance;
-
-	public static DbWrapper getInstance() {
-		if (instance == null) {
-			instance = new DbWrapper();
-		}
-		return instance;
-	}
-
-	private DbWrapper() {
-	}
 
 	public void removeAll() throws ApplicationException {
 
@@ -81,7 +67,7 @@ public class DbWrapper {
 	}
 
 	public GraphDatabaseService startDb() throws ApplicationException {
-		graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(DB_PATH);
+		graphDb = getGraphDatabaseFactory().newEmbeddedDatabase(DB_PATH);
 		nodeIndex = graphDb.index().forNodes(DomainConstants.INDEX_NAME);
 		registerShutdownHook(graphDb);
 
@@ -129,10 +115,12 @@ public class DbWrapper {
 			node = graphDb.createNode();
 
 			nodID = Long.parseLong(domainNode.getNodeId().trim());
+			
 			double lat = Double.parseDouble(domainNode.getLatitude().trim())
 					* DomainConstants.SCALE_1E_6;
 			double lon = Double.parseDouble(domainNode.getLongitude().trim())
 					* DomainConstants.SCALE_1E_6;
+			
 			String railroad = domainNode.getDescription().trim();
 			String stFips = domainNode.getStFIPS();
 
@@ -193,6 +181,14 @@ public class DbWrapper {
 		} finally {
 			tx.finish();
 		}
+	}
+
+	public GraphDatabaseFactory getGraphDatabaseFactory() {
+		return graphDatabaseFactory;
+	}
+
+	public void setGraphDatabaseFactory(GraphDatabaseFactory graphDatabaseFactory) {
+		this.graphDatabaseFactory = graphDatabaseFactory;
 	}
 
 }

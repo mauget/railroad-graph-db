@@ -16,20 +16,28 @@ import org.neo4j.graphdb.Path;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
+import org.neo4j.graphdb.index.IndexHits;
+import org.neo4j.graphdb.index.IndexManager;
 import org.neo4j.kernel.Traversal;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.ramblerag.db.ApplicationException;
-import com.ramblerag.db.DbWrapper;
+import com.ramblerag.db.core.ApplicationException;
+import com.ramblerag.db.core.DbWrapper;
+import com.ramblerag.db.core.GlobalConstants;
 import com.ramblerag.domain.DomainConstants;
 
 /**
- * Dump route to KML suitable for feeding to Google Earth
+ * Dump route to KML, suitable for feeding to Google Earth
 
  * @author mauget
  *
  */
-public class Route {
+public class Router {
+	
+	// Injected
+	private DbWrapper dbWrapper;
 
+	// Routing helper functions
 	private final EstimateEvaluator<Double> estimateEval = CommonEvaluators.geoEstimateEvaluator(
 			DomainConstants.PROP_LATITUDE, DomainConstants.PROP_LONGITUDE );
 
@@ -41,30 +49,35 @@ public class Route {
 		}};
 
 	public static void main(String[] args) {
+
 		try {
+			ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(
+		        new String[] {GlobalConstants.APPLICATION_CONTEXT_XML});
+		
+			Router router = appContext.getBean(Router.class);
+			
 			// Dumps to System.out PrintStream, but caller can supply any PrintStream
-//			new Route().route(System.out, 1, 2000);
-//			new Route().route(System.out, 1000, 8000);
-//			new Route().route(System.out, 1, 133752);
-//			new Route().route(System.out, 11000, 2400);
-//			new Route().route(System.out, 8000, 2000);
-			new Route().route(System.out, 13000, 123);
+//			router.getShortestRoute(System.out, 1, 2000);
+//			router.getShortestRoute(System.out, 1000, 8000);
+			router.getShortestRoute(System.out, 1, 133752);
+//			router.getShortestRoute(System.out, 11000, 2400);
+//			router.getShortestRoute(System.out, 8000, 2000);
+//			router.getShortestRoute(System.out, 13000, 123);
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void route(PrintStream ps, long keyValueA, long keyValueB)
+	public void getShortestRoute(PrintStream ps, long keyValueA, long keyValueB)
 			throws ApplicationException {
-
-		DbWrapper dbw = DbWrapper.getInstance();
-
-		GraphDatabaseService graphDb = dbw.startDb();
+		
+		GraphDatabaseService graphDb = getDbWrapper().startDb();
 
 		Index<Node> nodeIndex = graphDb.index().forNodes(DomainConstants.INDEX_NAME);
-		
+
 		Node nodeA = nodeIndex.get(DomainConstants.PROP_NODE_ID, keyValueA)
 				.getSingle();
+		
 		Node nodeB = nodeIndex.get(DomainConstants.PROP_NODE_ID, keyValueB)
 				.getSingle();
 
@@ -90,7 +103,7 @@ public class Route {
 			tx.finish();
 		}
 
-		dbw.shutdownDb();
+		getDbWrapper().shutdownDb();
 	}
 
 	private void emitCoordinate(PrintStream printSteam, PathFinder<WeightedPath> shortestPath, Node nodeA, Node nodeB) {
@@ -105,6 +118,14 @@ public class Route {
 			printSteam.println(String.format("%f,%f,2300", lon, lat));
 		}
 		
+	}
+
+	public DbWrapper getDbWrapper() {
+		return dbWrapper;
+	}
+
+	public void setDbWrapper(DbWrapper dbWrapper) {
+		this.dbWrapper = dbWrapper;
 	}
 
 }

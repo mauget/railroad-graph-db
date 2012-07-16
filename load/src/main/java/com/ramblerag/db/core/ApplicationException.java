@@ -1,4 +1,4 @@
-package com.ramblerag.db;
+package com.ramblerag.db.core;
 
 public class ApplicationException extends Exception {
 

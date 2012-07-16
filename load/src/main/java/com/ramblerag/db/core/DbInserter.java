@@ -1,4 +1,4 @@
-package com.ramblerag.db;
+package com.ramblerag.db.core;
 
 import java.util.HashMap;
 import java.util.Map;

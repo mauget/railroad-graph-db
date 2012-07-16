@@ -1,4 +1,4 @@
-package com.ramblerag.db;
+package com.ramblerag.db.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,16 +14,27 @@ import org.apache.lucene.document.Fieldable;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.store.FSDirectory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.ramblerag.db.core.GlobalConstants;
 
 @SuppressWarnings("restriction")
 public class IndexDumper {
 
 	public static void main(String[] args) {
-		if (args.length == 0){
-			args = new String[]{"var/graphdb/index"};
-		}
+
 		try {
-			new IndexDumper().dump(args[0]);
+			ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(
+		        new String[] {GlobalConstants.APPLICATION_CONTEXT_XML});
+			
+			IndexDumper indexDumper = appContext.getBean(IndexDumper.class);
+		
+			if (args.length == 0){
+				args = new String[]{"var/graphdb/index"};
+			}
+		
+		
+			indexDumper.dump(args[0]);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
