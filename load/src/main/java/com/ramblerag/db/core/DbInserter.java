@@ -45,10 +45,15 @@ public class DbInserter {
 
 	public BatchInserter startDbInserter(String[] args) {
 		
-		inserter = BatchInserters.inserter(DbWrapper.DB_PATH);
-		
-		indexProvider = new LuceneBatchInserterIndexProvider(inserter);
-		nodeIndex = indexProvider.nodeIndex(DomainConstants.INDEX_NAME, MapUtil.stringMap( "type", "exact" ) );
+		if (null == getInserter()){
+			inserter = BatchInserters.inserter(DbWrapper.DB_PATH);
+		}
+		if (null == getIndexProvider()){
+			indexProvider = new LuceneBatchInserterIndexProvider(inserter);
+		}
+		if (null == getNodeIndex()){
+			nodeIndex = indexProvider.nodeIndex(DomainConstants.INDEX_NAME, MapUtil.stringMap( "type", "exact" ) );
+		}
 		nodeIndex.setCacheCapacity(DomainConstants.INDEX_NAME, 134000);
 		
 		return inserter;
@@ -120,5 +125,29 @@ public class DbInserter {
 
 	public void flushToIndex() {
 		nodeIndex.flush();
+	}
+
+	public BatchInserter getInserter() {
+		return inserter;
+	}
+
+	public void setInserter(BatchInserter inserter) {
+		this.inserter = inserter;
+	}
+
+	public BatchInserterIndexProvider getIndexProvider() {
+		return indexProvider;
+	}
+
+	public void setIndexProvider(BatchInserterIndexProvider indexProvider) {
+		this.indexProvider = indexProvider;
+	}
+
+	public BatchInserterIndex getNodeIndex() {
+		return nodeIndex;
+	}
+
+	public void setNodeIndex(BatchInserterIndex nodeIndex) {
+		this.nodeIndex = nodeIndex;
 	}
 }
