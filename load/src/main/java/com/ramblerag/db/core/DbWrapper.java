@@ -191,4 +191,20 @@ public class DbWrapper {
 		this.graphDatabaseFactory = graphDatabaseFactory;
 	}
 
+	public GraphDatabaseService getGraphDb() {
+		return graphDb;
+	}
+
+	public void setGraphDb(GraphDatabaseService graphDb) {
+		this.graphDb = graphDb;
+	}
+
+	public Index<Node> getNodeIndex() {
+		return nodeIndex;
+	}
+
+	public void setNodeIndex(Index<Node> nodeIndex) {
+		this.nodeIndex = nodeIndex;
+	}
+
 }

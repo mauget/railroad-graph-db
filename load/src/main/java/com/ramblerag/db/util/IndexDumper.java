@@ -18,7 +18,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ramblerag.db.core.GlobalConstants;
 
-@SuppressWarnings("restriction")
 public class IndexDumper {
 
 	public static void main(String[] args) {

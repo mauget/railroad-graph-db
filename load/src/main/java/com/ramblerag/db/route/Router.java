@@ -1,7 +1,11 @@
 package com.ramblerag.db.route;
 
+import java.io.IOException;
 import java.io.PrintStream;
 
+import org.apache.log4j.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.neo4j.graphalgo.CommonEvaluators;
 import org.neo4j.graphalgo.CostEvaluator;
 import org.neo4j.graphalgo.EstimateEvaluator;
@@ -31,6 +35,8 @@ import com.ramblerag.domain.DomainConstants;
  */
 public class Router {
 	
+	private static Logger log = Logger.getLogger(Router.class);
+	
 	// Injected
 	private DbWrapper dbWrapper;
 
@@ -56,13 +62,80 @@ public class Router {
 			// Dumps to System.out PrintStream, but caller can supply any PrintStream
 //			router.getShortestRoute(System.out, 1, 2000);
 //			router.getShortestRoute(System.out, 1000, 8000);
-			router.getShortestRoute(System.out, 1, 133752);
+		//	router.getShortestRoute(System.out, 1, 133752);
 //			router.getShortestRoute(System.out, 11000, 2400);
 //			router.getShortestRoute(System.out, 8000, 2000);
 //			router.getShortestRoute(System.out, 13000, 123);
-		} catch (ApplicationException e) {
+			
+			String dir = System.getProperty("java.io.tmpdir");
+			String kmlPath = String.format("%srouteTmp.kml", dir);
+			PrintStream ps = new PrintStream(kmlPath);
+			
+//			router.getShortestRoute(ps, 1, 133752);
+			router.getShortestRoute(ps, 123,  12345);
+//			router.getShortestRoute(ps, 13000, 123);
+			
+			router.startGoogleEarth(kmlPath);
+//		} catch (ApplicationException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private JSONObject osCmdMap  ;
+	
+	protected String getStartProcessCmd() throws JSONException {
+		
+		if (osCmdMap == null) {
+			String osCmdJSON  = "{" +
+				"\"AIX\" : \"open\"," +
+				"\"Digital Unix\" : \"open\"," +
+				"\"FreeBSD\" : \"open\"," +
+				"\"HP UX\" : \"open\"," +
+				"\"Irix\" : \"open\"," +
+				"\"Linux\" : \"open\"," +
+				"\"Mac OS\" : \"open\"," +		  //?
+				"\"Mac OS X\" : \"open\"," +
+				"\"MPE/iX\" : \"open\"," +
+				"\"Netware 4.11\" : \"open\"," +  //?
+				"\"OS/2\" : \"exec\"," +
+				"\"Solaris\" : \"open\"," +
+				"\"Windows 2000\" : \"exec\"," +
+				"\"Windows 95\" : \"exec\"," +
+				"\"Windows 98\" : \"exec\"," +
+				"\"Windows NT\" : \"exec\"," +
+				"\"Windows Vista\" : \"exec\"," +
+				"\"Windows XP\" : \"exec\"," +
+				"\"Windows 7\" : \"exec\"," +
+				"\"Windows 8\" : \"exec\"," +
+				"\"Windows Server 2008\" : \"exec\"," +
+				"\"Windows Server 2008 R2\" : \"exec\"" +
+			"}";
+			
+			 osCmdMap = new JSONObject(osCmdJSON);
+			
+		}
+		String osName = System.getProperty("os.name");
+		return (String) osCmdMap.get(osName);
+	}
+	
+	protected void startGoogleEarth(String kmlPath) {
+		try {
+			
+			// Create ProcessBuilder instance for OS to open Google Earth.app
+			String osName = System.getProperty("os.name");
+
+			log.info(osName);
+
+			ProcessBuilder processBuilder = new ProcessBuilder(getStartProcessCmd(), kmlPath);
+			processBuilder.start();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void getShortestRoute(PrintStream ps, long keyValueA, long keyValueB)
