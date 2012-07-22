@@ -114,8 +114,11 @@ public class DbInserter {
 			long nodeIdA = nodeIndex.get(DomainConstants.PROP_NODE_ID, keyValueA).getSingle();
 			long nodeIdB = nodeIndex.get(DomainConstants.PROP_NODE_ID, keyValueB).getSingle();
 
+			Map<String, Object> props = new HashMap<String, Object>();
+			props.put(DomainConstants.REL_PROP_STFIPS1, domainLink.getStFIPS1());
+			props.put(DomainConstants.REL_PROP_STFIPS2, domainLink.getStFIPS2());
 			
-			inserter.createRelationship( nodeIdA, nodeIdB, DomainConstants.RelTypes.DOMAIN_LINK, null );
+			inserter.createRelationship( nodeIdA, nodeIdB, DomainConstants.RelTypes.DOMAIN_LINK, props );
 
 		} catch (Exception e) {
 			log.error(e.toString());

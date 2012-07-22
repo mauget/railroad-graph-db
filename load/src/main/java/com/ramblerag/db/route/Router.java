@@ -35,6 +35,10 @@ import com.ramblerag.domain.DomainConstants;
  */
 public class Router {
 	
+	private static final String SYS_PROP_JAVA_IO_TMPDIR = "java.io.tmpdir";
+
+	private static final String SYS_PROP_OS_NAME = "os.name";
+
 	private static Logger log = Logger.getLogger(Router.class);
 	
 	// Injected
@@ -59,21 +63,20 @@ public class Router {
 		
 			Router router = appContext.getBean(Router.class);
 			
-			// Dumps to System.out PrintStream, but caller can supply any PrintStream
-//			router.getShortestRoute(System.out, 1, 2000);
-//			router.getShortestRoute(System.out, 1000, 8000);
-		//	router.getShortestRoute(System.out, 1, 133752);
-//			router.getShortestRoute(System.out, 11000, 2400);
-//			router.getShortestRoute(System.out, 8000, 2000);
-//			router.getShortestRoute(System.out, 13000, 123);
+			// May dump to System.out PrintStream, but we can supply temp PrintStream
 			
-			String dir = System.getProperty("java.io.tmpdir");
+			String dir = System.getProperty(SYS_PROP_JAVA_IO_TMPDIR);
 			String kmlPath = String.format("%srouteTmp.kml", dir);
 			PrintStream ps = new PrintStream(kmlPath);
 			
 //			router.getShortestRoute(ps, 1, 133752);
-			router.getShortestRoute(ps, 123,  12345);
+//			router.getShortestRoute(ps, 123,  12345);
 //			router.getShortestRoute(ps, 13000, 123);
+//			router.getShortestRoute(ps, 1, 2000);
+//			router.getShortestRoute(ps, 1000, 8000);
+			router.getShortestRoute(ps, 4321, 110678);
+//			router.getShortestRoute(ps, 11000, 2400);
+//			router.getShortestRoute(ps, 8000, 2000);
 			
 			router.startGoogleEarth(kmlPath);
 //		} catch (ApplicationException e) {
@@ -86,36 +89,37 @@ public class Router {
 	
 	protected String getStartProcessCmd() throws JSONException {
 		
-		if (osCmdMap == null) {
-			String osCmdJSON  = "{" +
-				"\"AIX\" : \"open\"," +
-				"\"Digital Unix\" : \"open\"," +
-				"\"FreeBSD\" : \"open\"," +
-				"\"HP UX\" : \"open\"," +
-				"\"Irix\" : \"open\"," +
-				"\"Linux\" : \"open\"," +
-				"\"Mac OS\" : \"open\"," +		  //?
-				"\"Mac OS X\" : \"open\"," +
-				"\"MPE/iX\" : \"open\"," +
-				"\"Netware 4.11\" : \"open\"," +  //?
-				"\"OS/2\" : \"exec\"," +
-				"\"Solaris\" : \"open\"," +
-				"\"Windows 2000\" : \"exec\"," +
-				"\"Windows 95\" : \"exec\"," +
-				"\"Windows 98\" : \"exec\"," +
-				"\"Windows NT\" : \"exec\"," +
-				"\"Windows Vista\" : \"exec\"," +
-				"\"Windows XP\" : \"exec\"," +
-				"\"Windows 7\" : \"exec\"," +
-				"\"Windows 8\" : \"exec\"," +
-				"\"Windows Server 2008\" : \"exec\"," +
-				"\"Windows Server 2008 R2\" : \"exec\"" +
-			"}";
+		if (osCmdMap == null) { //
+			
+			String osCmdJSON = "{" + //
+					"\"AIX\" : \"open\"," + //
+					"\"Digital Unix\" : \"open\"," + //
+					"\"FreeBSD\" : \"open\"," + //
+					"\"HP UX\" : \"open\"," + //
+					"\"Irix\" : \"open\"," + //
+					"\"Linux\" : \"open\"," + //
+					"\"Mac OS\" : \"open\"," + // //?
+					"\"Mac OS X\" : \"open\"," + //
+					"\"MPE/iX\" : \"open\"," + //
+					"\"Netware 4.11\" : \"open\"," + // //?
+					"\"OS/2\" : \"exec\"," + //
+					"\"Solaris\" : \"open\"," + //
+					"\"Windows 2000\" : \"exec\"," + //
+					"\"Windows 95\" : \"exec\"," + //
+					"\"Windows 98\" : \"exec\"," + //
+					"\"Windows NT\" : \"exec\"," + //
+					"\"Windows Vista\" : \"exec\"," + //
+					"\"Windows XP\" : \"exec\"," + //
+					"\"Windows 7\" : \"exec\"," + //
+					"\"Windows 8\" : \"exec\"," + //
+					"\"Windows Server 2008\" : \"exec\"," + //
+					"\"Windows Server 2008 R2\" : \"exec\"" + //
+					"}"; //
 			
 			 osCmdMap = new JSONObject(osCmdJSON);
-			
 		}
-		String osName = System.getProperty("os.name");
+		
+		String osName = System.getProperty(SYS_PROP_OS_NAME);
 		return (String) osCmdMap.get(osName);
 	}
 	
@@ -123,11 +127,13 @@ public class Router {
 		try {
 			
 			// Create ProcessBuilder instance for OS to open Google Earth.app
-			String osName = System.getProperty("os.name");
+			String osName = System.getProperty(SYS_PROP_OS_NAME);
+			String processCmd = getStartProcessCmd();
 
-			log.info(osName);
+			log.info(String.format("Operating system is \"%s\"", osName));
+			log.info(String.format("... OS process spawn command is \"%s\"", processCmd));
 
-			ProcessBuilder processBuilder = new ProcessBuilder(getStartProcessCmd(), kmlPath);
+			ProcessBuilder processBuilder = new ProcessBuilder(processCmd, kmlPath);
 			processBuilder.start();
 			
 		} catch (IOException e) {
@@ -140,6 +146,8 @@ public class Router {
 
 	public void getShortestRoute(PrintStream ps, long keyValueA, long keyValueB)
 			throws ApplicationException {
+		
+		log.info(String.format("Finding least-expensive route from node %d to node %d", keyValueA, keyValueB));
 		
 		GraphDatabaseService graphDb = getDbWrapper().startDb();
 
