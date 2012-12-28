@@ -69,12 +69,12 @@ public class Router {
 			String kmlPath = String.format("%srouteTmp.kml", dir);
 			PrintStream ps = new PrintStream(kmlPath);
 			
-//			router.getShortestRoute(ps, 1, 133752);
+			router.getShortestRoute(ps, 1, 133752);
 //			router.getShortestRoute(ps, 123,  12345);
 //			router.getShortestRoute(ps, 13000, 123);
 //			router.getShortestRoute(ps, 1, 2000);
 //			router.getShortestRoute(ps, 1000, 8000);
-			router.getShortestRoute(ps, 4321, 110678);
+//			router.getShortestRoute(ps, 4321, 110678);
 //			router.getShortestRoute(ps, 11000, 2400);
 //			router.getShortestRoute(ps, 8000, 2000);
 			

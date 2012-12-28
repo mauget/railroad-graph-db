@@ -71,7 +71,7 @@ public class Loader {
 
 	/**
 	 * Overloaded to load either a transportation "Nod" domain file or a "Link"
-	 * domain file. Delegates to db wrapper to determine insertion
+	 * domain file. Delegates to db inserter to determine insertion
 	 * implementation specific to each.
 	 * 
 	 * @param clazz

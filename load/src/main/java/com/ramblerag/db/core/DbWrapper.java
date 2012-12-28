@@ -67,7 +67,9 @@ public class DbWrapper {
 	}
 
 	public GraphDatabaseService startDb() throws ApplicationException {
+		
 		graphDb = getGraphDatabaseFactory().newEmbeddedDatabase(DB_PATH);
+		//graphDb = getGraphDatabaseFactory().newEmbeddedDatabase("/Users/mauget/data");
 		nodeIndex = graphDb.index().forNodes(DomainConstants.INDEX_NAME);
 		registerShutdownHook(graphDb);
 
