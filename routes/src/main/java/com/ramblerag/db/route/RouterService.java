@@ -1,11 +1,8 @@
 package com.ramblerag.db.route;
 
-import java.io.IOException;
 import java.io.PrintStream;
 
 import org.apache.log4j.Logger;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.neo4j.graphalgo.CommonEvaluators;
 import org.neo4j.graphalgo.CostEvaluator;
 import org.neo4j.graphalgo.EstimateEvaluator;
@@ -50,21 +47,21 @@ public class RouterService {
 			return 1d;
 		}};
 
-	public void findRoute(PrintStream ps, long startNode, long endNode) {
+	public void findShortestPath(PrintStream ps, long startNode, long endNode) {
 		try {
 			RouterService router = Initializer.getApplicationContext().getBean(RouterService.class);
-			router.getShortestRoute(ps, startNode, endNode);
+			router.emitShortestPathKML(ps, startNode, endNode);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void getShortestRoute(PrintStream ps, long keyValueA, long keyValueB)
+	public void emitShortestPathKML(PrintStream ps, long keyValueA, long keyValueB)
 			throws ApplicationException {
 		
 		log.info(String.format("Finding least-expensive route from node %d to node %d", keyValueA, keyValueB));
 		
-		GraphDatabaseService graphDb = getDbWrapper().startDb();
+		GraphDatabaseService graphDb = getDbWrapper().getDbRef();
 
 		Index<Node> nodeIndex = graphDb.index().forNodes(DomainConstants.INDEX_NAME);
 
@@ -87,11 +84,11 @@ public class RouterService {
 			PathFinder<WeightedPath> shortestPath = GraphAlgoFactory.aStar(relExpander,
 					costEval, estimateEval);
 
+			
 			ps.println(KMLConstants.KML_LINE_START);
-			
 			emitCoordinate(ps, shortestPath, nodeA, nodeB);
-			
 			ps.println(KMLConstants.KML_LINE_END);
+			
 			
 			tx.success();
 			
@@ -99,7 +96,7 @@ public class RouterService {
 			tx.finish();
 		}
 
-		getDbWrapper().shutdownDb();
+		//getDbWrapper().shutdownDb();
 	}
 
 	private void emitCoordinate(PrintStream printSteam, PathFinder<WeightedPath> shortestPath, Node nodeA, Node nodeB) {
@@ -113,8 +110,8 @@ public class RouterService {
 				double lon = (Double) node.getProperty(DomainConstants.PROP_LONGITUDE);
 				
 				printSteam.println(String.format("%f,%f,2300", lon, lat));
-				log.info(String.format("%f,%f,2300", lon, lat));
 			}
+			log.info(String.format("Emitted route having shortest path coordinates"));
 		}
 	}
 

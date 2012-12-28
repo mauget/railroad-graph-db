@@ -67,8 +67,15 @@ public class DbWrapper {
 			}
 		});
 	}
+	
+	public GraphDatabaseService getDbRef() throws ApplicationException {
+		if (null == graphDb) {
+			startDb();
+		}
+		return graphDb;
+	}
 
-	public GraphDatabaseService startDb() throws ApplicationException {
+	private synchronized GraphDatabaseService startDb() throws ApplicationException {
 		File file = new File(DB_PATH);
 		
 		log.info(String.format("Opening database located at %s", file.getAbsolutePath()));

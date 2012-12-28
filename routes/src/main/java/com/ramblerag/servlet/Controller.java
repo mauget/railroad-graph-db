@@ -19,6 +19,12 @@ import com.ramblerag.db.route.RouterService;
 @WebServlet("/Controller")
 public class Controller extends HttpServlet  {
 	
+	private static final String PARAM_NODE_B = "nodeB";
+
+	private static final String PARAM_NODE_A = "nodeA";
+
+	private static final String MIME_APPLICATION_VND_GOOGLE_EARTH_KML_XML = "application/vnd.google-earth.kml+xml";
+
 	private static final long serialVersionUID = 1L;
 	
 	private static final String ROUTER_REF = "router";
@@ -38,28 +44,30 @@ public class Controller extends HttpServlet  {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doFindRoute(request, response);
+		shortestPath(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doFindRoute(request, response);
+		shortestPath(request, response);
 	}
 	
-	private void doFindRoute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void shortestPath(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
 		// Get endpoints from params, pass to findRount.
-		String nodeAStr = request.getParameter("nodeA");
-		String nodeBStr =request.getParameter("nodeB");
-		// TODO catch nulls and parse issues, do something about them
+		String nodeAStr = request.getParameter(PARAM_NODE_A);
+		String nodeBStr =request.getParameter(PARAM_NODE_B);
+		
+		// TODO catch nulls and parse issues, do something about them (although db just sits there harmlessly if bad input)
 		long nodeA = Long.parseLong(nodeAStr);
 		long nodeB = Long.parseLong(nodeBStr);
 
-		response.setContentType("application/vnd.google-earth.kml+xml");
+		response.setContentType(MIME_APPLICATION_VND_GOOGLE_EARTH_KML_XML);
 		PrintStream ps = new PrintStream(response.getOutputStream() );
 		log.info("Finding route");
-		router.findRoute(ps, nodeA, nodeB);
+		router.findShortestPath(ps, nodeA, nodeB);
 	}
 
 	@Override
