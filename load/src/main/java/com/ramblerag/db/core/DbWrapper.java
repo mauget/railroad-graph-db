@@ -71,9 +71,7 @@ public class DbWrapper {
 
 	public GraphDatabaseService startDb() throws ApplicationException {
 		
-		URL dbUrl = this.getClass().getClassLoader().getResource(DB_PATH);
-		String dbPath = dbUrl.getPath();
-		graphDb = getGraphDatabaseFactory().newEmbeddedDatabase(dbPath);
+		graphDb = getGraphDatabaseFactory().newEmbeddedDatabase(DbWrapper.DB_PATH);
 		
 		nodeIndex = graphDb.index().forNodes(DomainConstants.INDEX_NAME);
 		registerShutdownHook(graphDb);

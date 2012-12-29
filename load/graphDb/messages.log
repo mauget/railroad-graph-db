@@ -1,9 +1,10 @@
-2012-12-29 01:50:29.803+0000: Creating new db @ /Users/mauget/git/railroad-graph-db/load/graphDb/neostore
-2012-12-29 01:50:29.930+0000: Opened [/Users/mauget/git/railroad-graph-db/load/graphDb/nioneo_logical.log.1] clean empty log, version=0, lastTxId=1
-2012-12-29 01:50:29.947+0000: TM new log: tm_tx_log.1
-2012-12-29 01:50:29.974+0000: Opened [/Users/mauget/git/railroad-graph-db/load/graphDb/index/lucene.log.1] clean empty log, version=0, lastTxId=1
-2012-12-29 01:50:29.976+0000: --- STARTUP diagnostics START ---
-2012-12-29 01:50:29.978+0000: Neo4j Kernel properties:
+2012-12-29 02:29:45.611+0000: Thread[main,5,main] Starting BatchInserter(EmbeddedBatchInserter[graphDb])
+2012-12-29 02:30:37.900+0000: Thread[main,5,main] Clean shutdown on BatchInserter(EmbeddedBatchInserter[graphDb])
+2012-12-29 02:34:56.873+0000: Opened [/Users/mauget/git/railroad-graph-db/load/graphDb/nioneo_logical.log.1] clean empty log, version=0, lastTxId=1
+2012-12-29 02:34:56.899+0000: TM new log: tm_tx_log.1
+2012-12-29 02:34:56.921+0000: Opened [/Users/mauget/git/railroad-graph-db/load/graphDb/index/lucene.log.1] clean empty log, version=0, lastTxId=1
+2012-12-29 02:34:56.923+0000: --- STARTUP diagnostics START ---
+2012-12-29 02:34:56.924+0000: Neo4j Kernel properties:
     read_only=false
     neo4j.ext.udc.host=udc.neo4j.org
     logical_log=nioneo_logical.log
@@ -52,7 +53,7 @@
     node_cache_size=32489472
     neo4j.ext.udc.enabled=true
     online_backup_port=6362
-2012-12-29 01:50:29.983+0000: Diagnostics providers:
+2012-12-29 02:34:56.929+0000: Diagnostics providers:
     org.neo4j.kernel.configuration.Config
     org.neo4j.kernel.info.DiagnosticsManager
     SYSTEM_MEMORY
@@ -62,36 +63,36 @@
     CLASSPATH
     LIBRARY_PATH
     SYSTEM_PROPERTIES
-2012-12-29 01:50:29.983+0000: System memory information:
+2012-12-29 02:34:56.930+0000: System memory information:
     Total Physical memory: 4.00 GB
-    Free Physical memory: 132.06 MB
+    Free Physical memory: 290.50 MB
     Committed virtual memory: 2.72 GB
     Total swap space: 3.00 GB
-    Free swap space: 421.30 MB
-2012-12-29 01:50:29.991+0000: JVM memory information:
-    Free  memory: 69.07 MB
+    Free swap space: 371.50 MB
+2012-12-29 02:34:56.938+0000: JVM memory information:
+    Free  memory: 70.47 MB
     Total memory: 81.06 MB
     Max   memory: 123.94 MB
     Garbage Collector: ParNew: [Par Eden Space, Par Survivor Space]
     Garbage Collector: ConcurrentMarkSweep: [Par Eden Space, Par Survivor Space, CMS Old Gen, CMS Perm Gen]
-    Memory Pool: Code Cache (Non-heap memory): committed=2.44 MB, used=581.69 kB, max=48.00 MB, threshold=0.00 B
-    Memory Pool: Par Eden Space (Heap memory): committed=16.63 MB, used=11.02 MB, max=16.63 MB, threshold=?
-    Memory Pool: Par Survivor Space (Heap memory): committed=2.06 MB, used=991.48 kB, max=2.06 MB, threshold=?
+    Memory Pool: Code Cache (Non-heap memory): committed=2.44 MB, used=583.00 kB, max=48.00 MB, threshold=0.00 B
+    Memory Pool: Par Eden Space (Heap memory): committed=16.63 MB, used=9.63 MB, max=16.63 MB, threshold=?
+    Memory Pool: Par Survivor Space (Heap memory): committed=2.06 MB, used=985.59 kB, max=2.06 MB, threshold=?
     Memory Pool: CMS Old Gen (Heap memory): committed=62.38 MB, used=0.00 B, max=105.25 MB, threshold=0.00 B
-    Memory Pool: CMS Perm Gen (Non-heap memory): committed=20.75 MB, used=13.87 MB, max=82.00 MB, threshold=0.00 B
-2012-12-29 01:50:29.998+0000: Operating system information:
+    Memory Pool: CMS Perm Gen (Non-heap memory): committed=20.75 MB, used=13.86 MB, max=82.00 MB, threshold=0.00 B
+2012-12-29 02:34:56.944+0000: Operating system information:
     Operating System: Mac OS X; version: 10.8.2; arch: x86_64; cpus: 4
     Max number of file descriptors: 10240
     Number of open file descriptors: 79
-    Process id: 60166@MacBook-Air.local
+    Process id: 60382@MacBook-Air.local
     Byte order: LITTLE_ENDIAN
-2012-12-29 01:50:30.009+0000: JVM information:
+2012-12-29 02:34:56.952+0000: JVM information:
     VM Name: Java HotSpot(TM) 64-Bit Server VM
     VM Vendor: Apple Inc.
     VM Version: 20.12-b01-434
     JIT compiler: HotSpot 64-Bit Tiered Compilers
     VM Arguments: [-Dfile.encoding=UTF-8]
-2012-12-29 01:50:30.010+0000: Java classpath:
+2012-12-29 02:34:56.953+0000: Java classpath:
      [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar
      [bootstrap] /System/Library/Frameworks/JavaVM.framework/Versions/A/Frameworks/JavaRuntimeSupport.framework/Versions/A/Resources/Java/JavaRuntimeSupport.jar
      [classpath + loader.0] file:/Users/mauget/.m2/repository/org/neo4j/neo4j-udc/1.8.M05/neo4j-udc-1.8.M05.jar
@@ -148,12 +149,12 @@
      [loader.1] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/apple_provider.jar
      [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar
      [loader.1] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/sunpkcs11.jar
-2012-12-29 01:50:30.017+0000: Library path:
+2012-12-29 02:34:56.956+0000: Library path:
     /Users/mauget/git/railroad-graph-db/load
     /Library/Java/Extensions
     /System/Library/Java/Extensions
     /usr/lib/java
-2012-12-29 01:50:30.018+0000: System.properties:
+2012-12-29 02:34:56.956+0000: System.properties:
     sun.boot.library.path = /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries
     awt.nativeDoubleBuffering = true
     gopherProxySet = false
@@ -171,7 +172,7 @@
     user.timezone = America/New_York
     file.encoding = UTF-8
     user.name = mauget
-    sun.java.command = com.ramblerag.db.route.Command 666 11111
+    sun.java.command = com.ramblerag.db.route.Command 9999 12222
     sun.arch.data.model = 64
     user.language = en
     awt.toolkit = apple.awt.CToolkit
@@ -182,17 +183,17 @@
     socksNonProxyHosts = local|*.local|169.254/16|*.169.254/16
     ftp.nonProxyHosts = local|*.local|169.254/16|*.169.254/16
     sun.cpu.isalist = 
-2012-12-29 01:50:30.019+0000: --- STARTUP diagnostics END ---
-2012-12-29 01:50:30.089+0000: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
-2012-12-29 01:50:30.108+0000: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
-2012-12-29 01:50:30.111+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions START ---
-2012-12-29 01:50:30.112+0000: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1356745829809, id:-7413848363828974333, store version: 13561656364791302]
-2012-12-29 01:50:30.112+0000: Kernel version: Neo4j - Graph Database Kernel 1.8.M05
-2012-12-29 01:50:30.112+0000: Neo4j component versions:
-2012-12-29 01:50:30.113+0000:   Neo4j - Graph Database Kernel 1.8.M05
-2012-12-29 01:50:30.113+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions END ---
-2012-12-29 01:50:30.115+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS START ---
-2012-12-29 01:50:30.116+0000: Store versions:
+2012-12-29 02:34:56.957+0000: --- STARTUP diagnostics END ---
+2012-12-29 02:34:57.041+0000: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
+2012-12-29 02:34:57.060+0000: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
+2012-12-29 02:34:57.063+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions START ---
+2012-12-29 02:34:57.063+0000: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1356748185509, id:5576995390348501149, store version: 13561656364791302]
+2012-12-29 02:34:57.063+0000: Kernel version: Neo4j - Graph Database Kernel 1.8.M05
+2012-12-29 02:34:57.063+0000: Neo4j component versions:
+2012-12-29 02:34:57.064+0000:   Neo4j - Graph Database Kernel 1.8.M05
+2012-12-29 02:34:57.064+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions END ---
+2012-12-29 02:34:57.066+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS START ---
+2012-12-29 02:34:57.067+0000: Store versions:
     Store versions:
       NeoStore v0.A.0
       NodeStore v0.A.0
@@ -202,58 +203,75 @@
       PropertyIndexStore v0.A.0
       StringPropertyStore v0.A.0
       ArrayPropertyStore v0.A.0
-2012-12-29 01:50:30.116+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS END ---
-2012-12-29 01:50:30.116+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE START ---
-2012-12-29 01:50:30.116+0000: Id usage:
+2012-12-29 02:34:57.067+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS END ---
+2012-12-29 02:34:57.067+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE START ---
+2012-12-29 02:34:57.067+0000: Id usage:
     Id usage:
-      NodeStore: used=1 high=0
-      RelationshipStore: used=0 high=-1
-      RelationshipTypeStore: used=0 high=-1
-      PropertyStore: used=0 high=-1
-      PropertyIndexStore: used=0 high=-1
+      NodeStore: used=133753 high=133752
+      RelationshipStore: used=174428 high=174427
+      RelationshipTypeStore: used=1 high=0
+      PropertyStore: used=441932 high=441931
+      PropertyIndexStore: used=7 high=6
       StringPropertyStore: used=1 high=0
       ArrayPropertyStore: used=1 high=0
-2012-12-29 01:50:30.117+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE END ---
-2012-12-29 01:50:30.117+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles START ---
-2012-12-29 01:50:30.117+0000: Storage files:
+2012-12-29 02:34:57.068+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE END ---
+2012-12-29 02:34:57.068+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles START ---
+2012-12-29 02:34:57.068+0000: Storage files:
     active_tx_log: 11.00 B
     index:
+      lucene:
+        node:
+          nodes:
+            _2.fdt: 2.21 MB
+            _2.fdx: 1.02 MB
+            _2.fnm: 26.00 B
+            _2.frq: 767.58 kB
+            _2.nrm: 261.24 kB
+            _2.prx: 261.23 kB
+            _2.tii: 26.59 kB
+            _2.tis: 1.79 MB
+            segments.gen: 20.00 B
+            segments_1: 269.00 B
+          - Total: 6.30 MB
+        - Total: 6.30 MB
+      - Total: 6.30 MB
       lucene-store.db: 40.00 B
       lucene.log.1: 16.00 B
       lucene.log.active: 4.00 B
-    - Total: 60.00 B
+    - Total: 6.30 MB
+    index.db: 103.00 B
     lock: 0.00 B
-    messages.log: 12.64 kB
+    messages.log: 12.78 kB
     neostore: 54.00 B
     neostore.id: 9.00 B
-    neostore.nodestore.db: 9.00 B
+    neostore.nodestore.db: 1.15 MB
     neostore.nodestore.db.id: 9.00 B
-    neostore.propertystore.db: 0.00 B
+    neostore.propertystore.db: 17.28 MB
     neostore.propertystore.db.arrays: 128.00 B
     neostore.propertystore.db.arrays.id: 9.00 B
     neostore.propertystore.db.id: 9.00 B
-    neostore.propertystore.db.index: 0.00 B
+    neostore.propertystore.db.index: 1.02 kB
     neostore.propertystore.db.index.id: 9.00 B
-    neostore.propertystore.db.index.keys: 38.00 B
+    neostore.propertystore.db.index.keys: 1.00 kB
     neostore.propertystore.db.index.keys.id: 9.00 B
     neostore.propertystore.db.strings: 128.00 B
     neostore.propertystore.db.strings.id: 9.00 B
-    neostore.relationshipstore.db: 0.00 B
+    neostore.relationshipstore.db: 5.49 MB
     neostore.relationshipstore.db.id: 9.00 B
-    neostore.relationshiptypestore.db: 0.00 B
+    neostore.relationshiptypestore.db: 5.00 B
     neostore.relationshiptypestore.db.id: 9.00 B
-    neostore.relationshiptypestore.db.names: 38.00 B
+    neostore.relationshiptypestore.db.names: 76.00 B
     neostore.relationshiptypestore.db.names.id: 9.00 B
     nioneo_logical.log.1: 16.00 B
     nioneo_logical.log.active: 4.00 B
     tm_tx_log.1: 0.00 B
-2012-12-29 01:50:30.122+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles END ---
-2012-12-29 01:50:30.123+0000: Started - database is now available
-2012-12-29 01:50:30.124+0000: GC Monitor started. 
-2012-12-29 01:50:30.380+0000: Stopping - database is now unavailable
-2012-12-29 01:50:30.382+0000: TM shutting down
-2012-12-29 01:50:30.388+0000: Closed log /Users/mauget/git/railroad-graph-db/load/graphDb/index/lucene.log
-2012-12-29 01:50:30.389+0000: Closed log /Users/mauget/git/railroad-graph-db/load/graphDb/nioneo_logical.log
-2012-12-29 01:50:30.397+0000: NeoStore closed
-2012-12-29 01:50:30.397+0000: --- SHUTDOWN diagnostics START ---
-2012-12-29 01:50:30.398+0000: --- SHUTDOWN diagnostics END ---
+2012-12-29 02:34:57.077+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles END ---
+2012-12-29 02:34:57.079+0000: Started - database is now available
+2012-12-29 02:34:57.080+0000: GC Monitor started. 
+2012-12-29 02:34:57.723+0000: Stopping - database is now unavailable
+2012-12-29 02:34:57.723+0000: TM shutting down
+2012-12-29 02:34:57.729+0000: Closed log /Users/mauget/git/railroad-graph-db/load/graphDb/index/lucene.log
+2012-12-29 02:34:57.733+0000: Closed log /Users/mauget/git/railroad-graph-db/load/graphDb/nioneo_logical.log
+2012-12-29 02:34:57.740+0000: NeoStore closed
+2012-12-29 02:34:57.740+0000: --- SHUTDOWN diagnostics START ---
+2012-12-29 02:34:57.740+0000: --- SHUTDOWN diagnostics END ---
