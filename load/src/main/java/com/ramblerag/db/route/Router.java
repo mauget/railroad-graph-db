@@ -179,9 +179,8 @@ public class Router {
 			
 		} finally {
 			tx.finish();
+			getDbWrapper().shutdownDb();
 		}
-
-		getDbWrapper().shutdownDb();
 	}
 
 	private void emitCoordinate(PrintStream printSteam, PathFinder<WeightedPath> shortestPath, Node nodeA, Node nodeB) {
