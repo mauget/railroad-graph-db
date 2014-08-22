@@ -35,7 +35,7 @@ import com.ramblerag.domain.DomainConstants;
  */
 public class Router {
 	
-	private static final String SYS_PROP_JAVA_IO_TMPDIR = "java.io.tmpdir";
+	public static final String SYS_PROP_JAVA_IO_TMPDIR = "java.io.tmpdir";
 
 	private static final String SYS_PROP_OS_NAME = "os.name";
 
@@ -55,7 +55,7 @@ public class Router {
 			return 1d;
 		}};
 
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 
 		try {
 			ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(
@@ -83,7 +83,7 @@ public class Router {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	private JSONObject osCmdMap  ;
 	
@@ -179,9 +179,8 @@ public class Router {
 			
 		} finally {
 			tx.finish();
+			getDbWrapper().shutdownDb();
 		}
-
-		getDbWrapper().shutdownDb();
 	}
 
 	private void emitCoordinate(PrintStream printSteam, PathFinder<WeightedPath> shortestPath, Node nodeA, Node nodeB) {

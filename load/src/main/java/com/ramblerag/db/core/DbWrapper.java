@@ -1,5 +1,8 @@
 package com.ramblerag.db.core;
 
+import java.io.File;
+import java.net.URL;
+
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
@@ -16,7 +19,7 @@ import com.ramblerag.domain.Nod;
 
 public class DbWrapper {
 
-	public static final String DB_PATH = "var/graphDb";
+	public static final String DB_PATH = "graphDb";
 	private static Logger log = Logger.getLogger(DbWrapper.class);
 	
 	private GraphDatabaseFactory graphDatabaseFactory;
@@ -68,8 +71,8 @@ public class DbWrapper {
 
 	public GraphDatabaseService startDb() throws ApplicationException {
 		
-		graphDb = getGraphDatabaseFactory().newEmbeddedDatabase(DB_PATH);
-		//graphDb = getGraphDatabaseFactory().newEmbeddedDatabase("/Users/mauget/data");
+		graphDb = getGraphDatabaseFactory().newEmbeddedDatabase(DbWrapper.DB_PATH);
+		
 		nodeIndex = graphDb.index().forNodes(DomainConstants.INDEX_NAME);
 		registerShutdownHook(graphDb);
 

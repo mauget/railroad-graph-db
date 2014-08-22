@@ -1,5 +1,9 @@
 
     var APP = APP || {};
+
+    // http://myjavaneo4j.herokuapp.com/Controller?nodeA=68214&nodeB=40126 
+    APP.urlStem = 'http://myjavaneo4j.herokuapp.com';
+    //APP.urlStem = 'http://localhost:8080/routes';
 	
 	APP.drawMap = function() {
     	
@@ -16,14 +20,17 @@
     	APP.drawMap();
     	
     	// Draw route1
-    	$('#button1').click(function() {
-    		var workUrl = 'http://myjavaneo4j.herokuapp.com/Controller?nodeA=' + $('#fromId').val() + '&nodeB=' + $('#toId').val();
-    		APP.georssLayer = new google.maps.KmlLayer(workUrl);
+    	$('#buttonRoute').click(function() {
+    		// Would rather use a template here, but we does the best with what we have  ..
+    		var finalUrl = APP.urlStem+'/Controller?nodeA='+$('#fromId').val()+'&nodeB='+$('#toId').val();
+    		
+    		APP.georssLayer = new google.maps.KmlLayer(finalUrl);
     		APP.georssLayer.setMap(APP.map);
+    		
     		console.log(APP.georssLayer.getUrl());
     	});
 
-    	// Clear -- redraw undorned map
+    	// Clear -- redraw unadorned map
     	$('#buttonReset').click(function() {
     		APP.drawMap();
     	});
