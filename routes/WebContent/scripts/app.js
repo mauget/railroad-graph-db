@@ -15,8 +15,23 @@
         APP.map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 	};
 	
+	APP.initDynSize = function() {
+		resizeMapHeight();
+
+		window.onresize = function(event) {
+			resizeMapHeight();
+		};
+
+		function resizeMapHeight() {
+			var percentHeight = 65.0;
+			var vph = $(window).height() * percentHeight / 100;
+			$('#map_canvas').css( {'height': vph + 'px'}) ;
+		};
+	};
       
-    $(document).ready(function(){
+    $(document).ready(function() {
+    	APP.initDynSize();
+    	
     	APP.drawMap();
     	
     	// Draw route1
