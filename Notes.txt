@@ -1,0 +1,25 @@
+Notes:
+
+Update heroku client app:
+	herolu update
+
+Info on appp:
+	heroku apps:info --app myjavaneo4j
+
+Build the war by exporting from Eclipse or by mvn package
+
+Use heroku client app for
+
+	logging into Heroku
+		heroku auth:login mauget@mindspring.com
+			(Blocky dog + nnnn)
+
+	deployment
+		heroku deploy:war --war ./routes.war --app myjavaneo4j
+
+	inspecting log
+		heroku logs --app myjavaneo4j
+
+	running app in a browser
+		heroku apps:open --app myjavaneo4j 
+
