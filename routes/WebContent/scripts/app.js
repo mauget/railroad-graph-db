@@ -23,9 +23,11 @@
 		};
 
 		function resizeMapHeight() {
-			// Twiddle this value as suitable.
-			var percentHeight = 55.0;
-			var vph = $(window).height() * percentHeight / 100;
+			var pageHeight   = $(window).height();
+			var headerHeight = $('#map_header').outerHeight(true);
+			var footerHeight = $('#map_footer').outerHeight(true);
+			var vph = String(Math.max(pageHeight - headerHeight - footerHeight, 0));
+			
 			$('#map_canvas').css( {'height': vph + 'px'}) ;
 		};
 	};
