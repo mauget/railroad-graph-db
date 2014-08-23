@@ -55,7 +55,7 @@ public class Router {
 			return 1d;
 		}};
 
-/*	public static void main(String[] args) {
+	public static void main(String[] args) {
 
 		try {
 			ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(
@@ -83,7 +83,7 @@ public class Router {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 	
 	private JSONObject osCmdMap  ;
 	

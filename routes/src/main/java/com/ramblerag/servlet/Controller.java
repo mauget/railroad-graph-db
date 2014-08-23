@@ -16,7 +16,7 @@ import com.ramblerag.db.route.RouterService;
 /**
  * Servlet implementation class Controller
  */
-@WebServlet("/Controller")
+@WebServlet("/controller/*")
 public class Controller extends HttpServlet  {
 	
 	private static final String PARAM_NODE_B = "nodeB";

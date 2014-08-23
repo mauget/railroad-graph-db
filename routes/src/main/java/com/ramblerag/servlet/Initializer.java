@@ -11,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -19,10 +21,12 @@ import com.ramblerag.db.core.GlobalConstants;
 /**
  * Servlet implementation class InitServlet
  */
-@WebServlet(urlPatterns = { "/Initializer" }, loadOnStartup = 2)
+@WebServlet(urlPatterns = { "/initializer/*" }, loadOnStartup = 2)
 public class Initializer extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger Log = LoggerFactory.getLogger(Initializer.class);
 
 	private static ApplicationContext applicationContext;
 
@@ -30,6 +34,8 @@ public class Initializer extends HttpServlet {
 	 * Default constructor.
 	 */
 	public Initializer() {
+		Log.info("Initialize servlet loaded");
+		System.out.println("Initialize servlet loaded");
 	}
 
 	/**
