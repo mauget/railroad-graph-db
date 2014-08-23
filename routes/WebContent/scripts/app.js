@@ -23,7 +23,8 @@
 		};
 
 		function resizeMapHeight() {
-			var percentHeight = 65.0;
+			// Twiddle this value as suitable.
+			var percentHeight = 55.0;
 			var vph = $(window).height() * percentHeight / 100;
 			$('#map_canvas').css( {'height': vph + 'px'}) ;
 		};
