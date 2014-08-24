@@ -7,7 +7,6 @@ import java.net.URL;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
 import org.apache.commons.io.FileUtils;
@@ -21,7 +20,7 @@ import com.ramblerag.db.core.GlobalConstants;
 /**
  * Servlet implementation class InitServlet
  */
-@WebServlet(urlPatterns = { "/initializer/*" }, loadOnStartup = 2)
+// @ WebServlet(urlPatterns = { "/initializer/*" }, loadOnStartup = 2)
 public class Initializer extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -35,7 +34,6 @@ public class Initializer extends HttpServlet {
 	 */
 	public Initializer() {
 		Log.info("Initialize servlet loaded");
-		System.out.println("Initialize servlet loaded");
 	}
 
 	/**
@@ -62,10 +60,10 @@ public class Initializer extends HttpServlet {
 		try {
 			FileUtils.deleteDirectory(targetFile);
 		} catch (Exception e) {
-			System.out.println(String.format("Could not find %s to delete old database at %s.", targetFile.getAbsolutePath()));
+			Log.error(String.format("Could not find %s to delete old database at %s.", targetFile.getAbsolutePath()));
 		}
 
-		System.out.println(String.format("Copying %s to %s", sourceFile.getAbsolutePath(), targetFile.getAbsolutePath()));
+		Log.info(String.format("Copying %s to %s", sourceFile.getAbsolutePath(), targetFile.getAbsolutePath()));
 		FileUtils.copyDirectory(sourceFile, targetFile);
 	}
 

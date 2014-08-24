@@ -42,7 +42,7 @@ public class RouterService {
 
 	private final CostEvaluator<Double> costEval = new CostEvaluator<Double>() {
 
-    	// Constant cost. Could be a function of lading type, location, fuel surcharge, ..
+    	// Constant cost. Could be a function of lading type, location, fuel surcharge, washed-out track, ..
 		public Double getCost(Relationship relationship, Direction direction) {
 			return 1d;
 		}};
@@ -83,12 +83,10 @@ public class RouterService {
 
 			PathFinder<WeightedPath> shortestPath = GraphAlgoFactory.aStar(relExpander,
 					costEval, estimateEval);
-
 			
 			ps.println(KMLConstants.KML_LINE_START);
 			emitCoordinate(ps, shortestPath, nodeA, nodeB);
 			ps.println(KMLConstants.KML_LINE_END);
-			
 			
 			tx.success();
 			
@@ -104,15 +102,45 @@ public class RouterService {
 		WeightedPath path = shortestPath.findSinglePath(nodeA, nodeB);
 		
 		if (null != path){
+			if (true && path.length() == 0) {
+				// No route found: show a balloon at nodeA
+				emitNoRouteAtNode(printSteam, nodeA);
+				System.out.println("No route found"); // temp
+			} else 	
 			for (Node node : path.nodes()) {
-				
+				// Spew the path of connected nodes.
 				double lat = (Double) node.getProperty(DomainConstants.PROP_LATITUDE);
 				double lon = (Double) node.getProperty(DomainConstants.PROP_LONGITUDE);
 				
 				printSteam.println(String.format("%f,%f,2300", lon, lat));
+				
+				//System.out.println(String.format("%f,%f,2300", lon, lat)); // temp
 			}
 			log.info(String.format("Emitted route having shortest path coordinates"));
 		}
+	}
+
+	private void emitNoRouteAtNode(PrintStream printSteam, Node node) {
+		String prototype =
+		  "<name>Data+BalloonStyle</name>" +
+				"<Style id='golf-balloon-style'>" +
+		    "<BalloonStyle>" +
+		      "<text>" +
+		        "<![CDATA[" +
+		        "  No path found." +
+		        "]]>" +
+		      "</text>" +
+		    "</BalloonStyle>" +
+		  "</Style>" +
+		  "</Placemark>" +
+		    "<name>Club house</name>" +
+		    "<styleUrl>#balloon-style</styleUrl>" +
+		    "<Point>" +
+		      "<coordinates>%f,%f</coordinates>" +
+		    "</Point>" +
+		  "</Placemark>";
+		
+		printSteam.println(String.format(prototype, node.getProperty(DomainConstants.PROP_LATITUDE), node.getProperty(DomainConstants.PROP_LONGITUDE)));
 	}
 
 	public DbWrapper getDbWrapper() {
