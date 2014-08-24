@@ -39,8 +39,8 @@
     	
     	// Draw route1
     	$('#buttonRoute').click(function() {
-    		// Would rather use a template here, but we does the best with what we have  ..
-    		var finalUrl = APP.urlStem+'/Controller?nodeA='+$('#fromId').val()+'&nodeB='+$('#toId').val();
+    		// Would rather use a template here, but we do the best with what we have  ..
+    		var finalUrl = APP.urlStem+'/controller?nodeA='+$('#fromId').val()+'&nodeB='+$('#toId').val();
     		
     		APP.georssLayer = new google.maps.KmlLayer(finalUrl);
     		APP.georssLayer.setMap(APP.map);
