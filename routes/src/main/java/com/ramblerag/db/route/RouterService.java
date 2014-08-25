@@ -102,7 +102,7 @@ public class RouterService {
 		WeightedPath path = shortestPath.findSinglePath(nodeA, nodeB);
 		
 		if (null != path){
-			if (true && path.length() == 0) {
+			if (path.length() == 0) {
 				// No route found: show a balloon at nodeA
 				emitNoRouteAtNode(printSteam, nodeA);
 				System.out.println("No route found"); // temp
