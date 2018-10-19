@@ -1,59 +1,59 @@
-2012-12-29 02:29:45.611+0000: Thread[main,5,main] Starting BatchInserter(EmbeddedBatchInserter[graphDb])
-2012-12-29 02:30:37.900+0000: Thread[main,5,main] Clean shutdown on BatchInserter(EmbeddedBatchInserter[graphDb])
-2012-12-29 02:34:56.873+0000: Opened [/Users/mauget/git/railroad-graph-db/load/graphDb/nioneo_logical.log.1] clean empty log, version=0, lastTxId=1
-2012-12-29 02:34:56.899+0000: TM new log: tm_tx_log.1
-2012-12-29 02:34:56.921+0000: Opened [/Users/mauget/git/railroad-graph-db/load/graphDb/index/lucene.log.1] clean empty log, version=0, lastTxId=1
-2012-12-29 02:34:56.923+0000: --- STARTUP diagnostics START ---
-2012-12-29 02:34:56.924+0000: Neo4j Kernel properties:
-    read_only=false
-    neo4j.ext.udc.host=udc.neo4j.org
-    logical_log=nioneo_logical.log
-    intercept_committing_transactions=false
-    node_auto_indexing=false
-    relationship_cache_size=32489472
-    cache_type=soft
-    intercept_deserialized_transactions=false
-    lucene_searcher_cache_size=2147483647
-    neo4j.ext.udc.interval=86400000
-    use_memory_mapped_buffers=true
-    rebuild_idgenerators_fast=true
-    neostore.propertystore.db.index.keys.mapped_memory=1M
-    neostore.propertystore.db.arrays.mapped_memory=398M
-    neostore.propertystore.db.strings.mapped_memory=351M
-    gcr_cache_min_log_interval=60s
-    relationship_auto_indexing=false
-    relationship_grab_size=100
-    node_cache_array_fraction=1.0
-    allow_store_upgrade=false
-    execution_guard_enabled=false
-    relationship_cache_array_fraction=1.0
-    store_dir=graphDb
-    remote_logging_host=127.0.0.1
-    online_backup_enabled=false
-    remote_logging_port=4560
-    gc_monitor_threshold=200ms
-    load_kernel_extensions=true
-    array_block_size=120
-    neostore.relationshipstore.db.mapped_memory=506M
-    keep_logical_logs=true
-    dump_configuration=false
-    gc_monitor_wait_time=100ms
-    neostore.nodestore.db.mapped_memory=114M
-    neo4j.ext.udc.first_delay=600000
+2014-12-02 02:37:11.961+0000: Thread[main,5,main] Starting BatchInserter(EmbeddedBatchInserter[graphDb])
+2014-12-02 02:37:37.459+0000: Thread[main,5,main] Clean shutdown on BatchInserter(EmbeddedBatchInserter[graphDb])
+2014-12-02 16:02:14.459+0000: Opened [/Users/mauget/railroad-graph-db/load/graphDb/nioneo_logical.log.1] clean empty log, version=0, lastTxId=1
+2014-12-02 16:02:14.490+0000: TM new log: tm_tx_log.1
+2014-12-02 16:02:14.521+0000: Opened [/Users/mauget/railroad-graph-db/load/graphDb/index/lucene.log.1] clean empty log, version=0, lastTxId=1
+2014-12-02 16:02:14.523+0000: --- STARTUP diagnostics START ---
+2014-12-02 16:02:14.525+0000: Neo4j Kernel properties:
     neo4j.ext.udc.reg=unreg
-    ephemeral=false
-    neo_store=neostore
-    logging.threshold_for_rotation=104857600
-    neostore.propertystore.db.index.mapped_memory=1M
-    backup_slave=false
-    neostore.propertystore.db.mapped_memory=413M
+    remote_logging_port=4560
     string_block_size=120
-    grab_file_lock=true
-    remote_logging_enabled=false
-    node_cache_size=32489472
-    neo4j.ext.udc.enabled=true
+    execution_guard_enabled=false
+    ephemeral=false
+    relationship_grab_size=100
+    relationship_auto_indexing=false
+    read_only=false
+    use_memory_mapped_buffers=true
+    allow_store_upgrade=false
+    keep_logical_logs=true
+    neostore.propertystore.db.mapped_memory=663M
+    logging.threshold_for_rotation=104857600
     online_backup_port=6362
-2012-12-29 02:34:56.929+0000: Diagnostics providers:
+    neostore.propertystore.db.strings.mapped_memory=563M
+    neo4j.ext.udc.interval=86400000
+    rebuild_idgenerators_fast=true
+    node_cache_size=477233152
+    neo4j.ext.udc.host=udc.neo4j.org
+    node_cache_array_fraction=1.0
+    online_backup_enabled=false
+    neo4j.ext.udc.first_delay=600000
+    remote_logging_enabled=false
+    lucene_searcher_cache_size=2147483647
+    neo4j.ext.udc.enabled=true
+    neo_store=neostore
+    load_kernel_extensions=true
+    relationship_cache_size=477233152
+    neostore.nodestore.db.mapped_memory=184M
+    gcr_cache_min_log_interval=60s
+    neostore.propertystore.db.index.mapped_memory=1M
+    dump_configuration=false
+    neostore.propertystore.db.index.keys.mapped_memory=1M
+    remote_logging_host=127.0.0.1
+    neostore.propertystore.db.arrays.mapped_memory=639M
+    grab_file_lock=true
+    gc_monitor_wait_time=100ms
+    intercept_deserialized_transactions=false
+    intercept_committing_transactions=false
+    backup_slave=false
+    logical_log=nioneo_logical.log
+    cache_type=soft
+    store_dir=graphDb
+    relationship_cache_array_fraction=1.0
+    gc_monitor_threshold=200ms
+    node_auto_indexing=false
+    neostore.relationshipstore.db.mapped_memory=812M
+    array_block_size=120
+2014-12-02 16:02:14.529+0000: Diagnostics providers:
     org.neo4j.kernel.configuration.Config
     org.neo4j.kernel.info.DiagnosticsManager
     SYSTEM_MEMORY
@@ -63,137 +63,124 @@
     CLASSPATH
     LIBRARY_PATH
     SYSTEM_PROPERTIES
-2012-12-29 02:34:56.930+0000: System memory information:
-    Total Physical memory: 4.00 GB
-    Free Physical memory: 290.50 MB
-    Committed virtual memory: 2.72 GB
+2014-12-02 16:02:14.530+0000: System memory information:
+    Total Physical memory: 8.00 GB
+    Free Physical memory: 420.18 MB
+    Committed virtual memory: 5.75 GB
     Total swap space: 3.00 GB
-    Free swap space: 371.50 MB
-2012-12-29 02:34:56.938+0000: JVM memory information:
-    Free  memory: 70.47 MB
-    Total memory: 81.06 MB
-    Max   memory: 123.94 MB
-    Garbage Collector: ParNew: [Par Eden Space, Par Survivor Space]
-    Garbage Collector: ConcurrentMarkSweep: [Par Eden Space, Par Survivor Space, CMS Old Gen, CMS Perm Gen]
-    Memory Pool: Code Cache (Non-heap memory): committed=2.44 MB, used=583.00 kB, max=48.00 MB, threshold=0.00 B
-    Memory Pool: Par Eden Space (Heap memory): committed=16.63 MB, used=9.63 MB, max=16.63 MB, threshold=?
-    Memory Pool: Par Survivor Space (Heap memory): committed=2.06 MB, used=985.59 kB, max=2.06 MB, threshold=?
-    Memory Pool: CMS Old Gen (Heap memory): committed=62.38 MB, used=0.00 B, max=105.25 MB, threshold=0.00 B
-    Memory Pool: CMS Perm Gen (Non-heap memory): committed=20.75 MB, used=13.86 MB, max=82.00 MB, threshold=0.00 B
-2012-12-29 02:34:56.944+0000: Operating system information:
-    Operating System: Mac OS X; version: 10.8.2; arch: x86_64; cpus: 4
+    Free swap space: 910.50 MB
+2014-12-02 16:02:14.534+0000: JVM memory information:
+    Free  memory: 92.29 MB
+    Total memory: 123.00 MB
+    Max   memory: 1.78 GB
+    Garbage Collector: PS Scavenge: [PS Eden Space, PS Survivor Space]
+    Garbage Collector: PS MarkSweep: [PS Eden Space, PS Survivor Space, PS Old Gen]
+    Memory Pool: Code Cache (Non-heap memory): committed=2.81 MB, used=2.80 MB, max=240.00 MB, threshold=0.00 B
+    Memory Pool: Metaspace (Non-heap memory): committed=10.88 MB, used=10.70 MB, max=-1.00 B, threshold=0.00 B
+    Memory Pool: Compressed Class Space (Non-heap memory): committed=1.38 MB, used=1.32 MB, max=1.00 GB, threshold=0.00 B
+    Memory Pool: PS Eden Space (Heap memory): committed=32.50 MB, used=30.71 MB, max=672.50 MB, threshold=?
+    Memory Pool: PS Survivor Space (Heap memory): committed=5.00 MB, used=0.00 B, max=5.00 MB, threshold=?
+    Memory Pool: PS Old Gen (Heap memory): committed=85.50 MB, used=0.00 B, max=1.33 GB, threshold=0.00 B
+2014-12-02 16:02:14.544+0000: Operating system information:
+    Operating System: Mac OS X; version: 10.10.1; arch: x86_64; cpus: 4
     Max number of file descriptors: 10240
-    Number of open file descriptors: 79
-    Process id: 60382@MacBook-Air.local
+    Number of open file descriptors: 60
+    Process id: 94512@MacBook-Pro.local
     Byte order: LITTLE_ENDIAN
-2012-12-29 02:34:56.952+0000: JVM information:
+2014-12-02 16:02:14.557+0000: JVM information:
     VM Name: Java HotSpot(TM) 64-Bit Server VM
-    VM Vendor: Apple Inc.
-    VM Version: 20.12-b01-434
+    VM Vendor: Oracle Corporation
+    VM Version: 25.20-b23
     JIT compiler: HotSpot 64-Bit Tiered Compilers
     VM Arguments: [-Dfile.encoding=UTF-8]
-2012-12-29 02:34:56.953+0000: Java classpath:
-     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar
-     [bootstrap] /System/Library/Frameworks/JavaVM.framework/Versions/A/Frameworks/JavaRuntimeSupport.framework/Versions/A/Resources/Java/JavaRuntimeSupport.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/neo4j/neo4j-udc/1.8.M05/neo4j-udc-1.8.M05.jar
-     [loader.1] file:/System/Library/Java/Extensions/dns_sd.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar
-     [classpath + loader.0] file:/Users/mauget/git/railroad-graph-db/load/target/classes/
-     [loader.1] file:/System/Library/Java/Extensions/MRJToolkit.jar
-     [loader.1] file:/System/Library/Java/Extensions/vecmath.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar
-     [loader.1] file:/System/Library/Java/Extensions/libmlib_jai.jnilib
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/commons-lang/commons-lang/2.3/commons-lang-2.3.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/neo4j/neo4j-cypher/1.8.M05/neo4j-cypher-1.8.M05.jar
-     [loader.1] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/dnsns.jar
-     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/laf.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/springframework/spring-beans/3.1.2.RELEASE/spring-beans-3.1.2.RELEASE.jar
-     [loader.1] file:/System/Library/Java/Extensions/libJ3D.jnilib
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/apache/lucene/lucene-core/3.5.0/lucene-core-3.5.0.jar
-     [loader.1] file:/System/Library/Java/Extensions/mlibwrapper_jai.jar
-     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar
-     [loader.1] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/localedata.jar
-     [loader.1] file:/System/Library/Java/Extensions/QTJava.zip
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/neo4j/neo4j-graph-algo/1.8.M05/neo4j-graph-algo-1.8.M05.jar
-     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar
-     [loader.1] file:/System/Library/Java/Extensions/libAppleScriptEngine.jnilib
-     [loader.1] file:/System/Library/Java/Extensions/libJ3DAudio.jnilib
-     [loader.1] file:/System/Library/Java/Extensions/j3daudio.jar
-     [loader.1] file:/System/Library/Java/Extensions/libJ3DUtils.jnilib
-     [loader.1] file:/System/Library/Java/Extensions/libQTJNative.jnilib
-     [loader.1] file:/System/Library/Java/Extensions/j3dcore.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/scala-lang/scala-library/2.9.1-1/scala-library-2.9.1-1.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/json/json/20090211/json-20090211.jar
-     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/sunrsasign.jar
-     [loader.1] file:/System/Library/Java/Extensions/j3dutils.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/springframework/spring-core/3.1.2.RELEASE/spring-core-3.1.2.RELEASE.jar
-     [loader.1] file:/System/Library/Java/Extensions/jai_core.jar
+2014-12-02 16:02:14.559+0000: Java classpath:
      [classpath + loader.0] file:/Users/mauget/.m2/repository/org/neo4j/neo4j/1.8.M05/neo4j-1.8.M05.jar
-     [loader.1] file:/System/Library/Java/Extensions/jai_codec.jar
      [classpath + loader.0] file:/Users/mauget/.m2/repository/org/neo4j/neo4j-graph-matching/1.8.M05/neo4j-graph-matching-1.8.M05.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/springframework/spring-expression/3.1.2.RELEASE/spring-expression-3.1.2.RELEASE.jar
-     [loader.1] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/sunjce_provider.jar
+     [loader.1] file:/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/ext/jfxrt.jar
+     [loader.1] file:/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/ext/zipfs.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar
+     [bootstrap] /Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/jfr.jar
+     [bootstrap] /Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/rt.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/neo4j/neo4j-cypher/1.8.M05/neo4j-cypher-1.8.M05.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/neo4j/neo4j-udc/1.8.M05/neo4j-udc-1.8.M05.jar
      [classpath + loader.0] file:/Users/mauget/.m2/repository/org/springframework/spring-asm/3.1.2.RELEASE/spring-asm-3.1.2.RELEASE.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/neo4j/neo4j-kernel/1.8.M05/neo4j-kernel-1.8.M05.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/springframework/spring-aop/3.1.2.RELEASE/spring-aop-3.1.2.RELEASE.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/com/ancientprogramming/fixedformat4j/fixedformat4j/1.2.2/fixedformat4j-1.2.2.jar
+     [bootstrap] /Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/jce.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/springframework/spring-core/3.1.2.RELEASE/spring-core-3.1.2.RELEASE.jar
+     [loader.1] file:/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/ext/sunjce_provider.jar
+     [bootstrap] /Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/jsse.jar
+     [loader.1] file:/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/ext/localedata.jar
+     [loader.1] file:/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/ext/cldrdata.jar
      [classpath + loader.0] file:/Users/mauget/.m2/repository/org/apache/geronimo/specs/geronimo-jta_1.1_spec/1.1.1/geronimo-jta_1.1_spec-1.1.1.jar
-     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/jce.jar
-     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar
-     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/neo4j/neo4j-lucene-index/1.8.M05/neo4j-lucene-index-1.8.M05.jar
+     [bootstrap] /Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/sunrsasign.jar
+     [classpath + loader.0] file:/Users/mauget/railroad-graph-db/load/target/classes/
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/neo4j/neo4j-graph-algo/1.8.M05/neo4j-graph-algo-1.8.M05.jar
+     [loader.1] file:/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/ext/sunpkcs11.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/commons-lang/commons-lang/2.3/commons-lang-2.3.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/springframework/spring-expression/3.1.2.RELEASE/spring-expression-3.1.2.RELEASE.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/json/json/20090211/json-20090211.jar
+     [loader.1] file:/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/ext/nashorn.jar
+     [bootstrap] /Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/classes
      [classpath + loader.0] file:/Users/mauget/.m2/repository/org/springframework/spring-context/3.1.2.RELEASE/spring-context-3.1.2.RELEASE.jar
-     [loader.1] file:/System/Library/Java/Extensions/AppleScriptEngine.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/com/ancientprogramming/fixedformat4j/fixedformat4j/1.2.2/fixedformat4j-1.2.2.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/neo4j/neo4j-kernel/1.8.M05/neo4j-kernel-1.8.M05.jar
+     [loader.1] file:/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/ext/dnsns.jar
+     [loader.1] file:/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/ext/sunec.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/scala-lang/scala-library/2.9.1-1/scala-library-2.9.1-1.jar
      [classpath + loader.0] file:/Users/mauget/.m2/repository/org/neo4j/neo4j-jmx/1.8.M05/neo4j-jmx-1.8.M05.jar
-     [loader.1] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/apple_provider.jar
-     [bootstrap] /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar
-     [loader.1] file:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/sunpkcs11.jar
-2012-12-29 02:34:56.956+0000: Library path:
-    /Users/mauget/git/railroad-graph-db/load
+     [bootstrap] /Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/resources.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/springframework/spring-beans/3.1.2.RELEASE/spring-beans-3.1.2.RELEASE.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/springframework/spring-aop/3.1.2.RELEASE/spring-aop-3.1.2.RELEASE.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/neo4j/neo4j-lucene-index/1.8.M05/neo4j-lucene-index-1.8.M05.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/org/apache/lucene/lucene-core/3.5.0/lucene-core-3.5.0.jar
+     [loader.1] file:/System/Library/Java/Extensions/MRJToolkit.jar
+     [bootstrap] /Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/charsets.jar
+     [classpath + loader.0] file:/Users/mauget/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar
+2014-12-02 16:02:14.560+0000: Library path:
+    /Users/mauget/Library/Java/Extensions
     /Library/Java/Extensions
+    /Network/Library/Java/Extensions
     /System/Library/Java/Extensions
     /usr/lib/java
-2012-12-29 02:34:56.956+0000: System.properties:
-    sun.boot.library.path = /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries
-    awt.nativeDoubleBuffering = true
+    /Users/mauget/railroad-graph-db/load
+2014-12-02 16:02:14.560+0000: System.properties:
+    sun.boot.library.path = /Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib
     gopherProxySet = false
-    mrj.build = 11M3909
     path.separator = :
     file.encoding.pkg = sun.io
-    sun.java.launcher = SUN_STANDARD
     user.country = US
+    sun.java.launcher = SUN_STANDARD
     sun.os.patch.level = unknown
-    user.dir = /Users/mauget/git/railroad-graph-db/load
-    sun.jnu.encoding = MacRoman
+    user.dir = /Users/mauget/railroad-graph-db/load
+    sun.jnu.encoding = UTF-8
     sun.management.compiler = HotSpot 64-Bit Tiered Compilers
     http.nonProxyHosts = local|*.local|169.254/16|*.169.254/16
     user.home = /Users/mauget
     user.timezone = America/New_York
     file.encoding = UTF-8
     user.name = mauget
-    sun.java.command = com.ramblerag.db.route.Command 9999 12222
+    sun.java.command = com.ramblerag.db.route.Router
     sun.arch.data.model = 64
     user.language = en
-    awt.toolkit = apple.awt.CToolkit
+    awt.toolkit = sun.lwawt.macosx.LWCToolkit
     file.separator = /
-    sun.io.unicode.encoding = UnicodeLittle
+    sun.io.unicode.encoding = UnicodeBig
     sun.cpu.endian = little
-    mrj.version = 1070.1.6.0_37-434
     socksNonProxyHosts = local|*.local|169.254/16|*.169.254/16
     ftp.nonProxyHosts = local|*.local|169.254/16|*.169.254/16
     sun.cpu.isalist = 
-2012-12-29 02:34:56.957+0000: --- STARTUP diagnostics END ---
-2012-12-29 02:34:57.041+0000: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
-2012-12-29 02:34:57.060+0000: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
-2012-12-29 02:34:57.063+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions START ---
-2012-12-29 02:34:57.063+0000: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1356748185509, id:5576995390348501149, store version: 13561656364791302]
-2012-12-29 02:34:57.063+0000: Kernel version: Neo4j - Graph Database Kernel 1.8.M05
-2012-12-29 02:34:57.063+0000: Neo4j component versions:
-2012-12-29 02:34:57.064+0000:   Neo4j - Graph Database Kernel 1.8.M05
-2012-12-29 02:34:57.064+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions END ---
-2012-12-29 02:34:57.066+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS START ---
-2012-12-29 02:34:57.067+0000: Store versions:
+2014-12-02 16:02:14.561+0000: --- STARTUP diagnostics END ---
+2014-12-02 16:02:14.582+0000: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
+2014-12-02 16:02:14.694+0000: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
+2014-12-02 16:02:14.697+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions START ---
+2014-12-02 16:02:14.697+0000: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1417487831884, id:-5904105137855743675, store version: 13561656364791302]
+2014-12-02 16:02:14.697+0000: Kernel version: Neo4j - Graph Database Kernel 1.8.M05
+2014-12-02 16:02:14.697+0000: Neo4j component versions:
+2014-12-02 16:02:14.698+0000:   Neo4j - Graph Database Kernel 1.8.M05
+2014-12-02 16:02:14.698+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions END ---
+2014-12-02 16:02:14.700+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS START ---
+2014-12-02 16:02:14.701+0000: Store versions:
     Store versions:
       NeoStore v0.A.0
       NodeStore v0.A.0
@@ -203,9 +190,9 @@
       PropertyIndexStore v0.A.0
       StringPropertyStore v0.A.0
       ArrayPropertyStore v0.A.0
-2012-12-29 02:34:57.067+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS END ---
-2012-12-29 02:34:57.067+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE START ---
-2012-12-29 02:34:57.067+0000: Id usage:
+2014-12-02 16:02:14.701+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS END ---
+2014-12-02 16:02:14.701+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE START ---
+2014-12-02 16:02:14.702+0000: Id usage:
     Id usage:
       NodeStore: used=133753 high=133752
       RelationshipStore: used=174428 high=174427
@@ -214,24 +201,24 @@
       PropertyIndexStore: used=7 high=6
       StringPropertyStore: used=1 high=0
       ArrayPropertyStore: used=1 high=0
-2012-12-29 02:34:57.068+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE END ---
-2012-12-29 02:34:57.068+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles START ---
-2012-12-29 02:34:57.068+0000: Storage files:
+2014-12-02 16:02:14.702+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE END ---
+2014-12-02 16:02:14.703+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles START ---
+2014-12-02 16:02:14.703+0000: Storage files:
     active_tx_log: 11.00 B
     index:
       lucene:
         node:
           nodes:
-            _2.fdt: 2.21 MB
-            _2.fdx: 1.02 MB
-            _2.fnm: 26.00 B
-            _2.frq: 767.58 kB
-            _2.nrm: 261.24 kB
-            _2.prx: 261.23 kB
-            _2.tii: 26.59 kB
-            _2.tis: 1.79 MB
+            _0.fdt: 2.21 MB
+            _0.fdx: 1.02 MB
+            _0.fnm: 26.00 B
+            _0.frq: 767.58 kB
+            _0.nrm: 261.24 kB
+            _0.prx: 261.23 kB
+            _0.tii: 26.59 kB
+            _0.tis: 1.79 MB
             segments.gen: 20.00 B
-            segments_1: 269.00 B
+            segments_1: 242.00 B
           - Total: 6.30 MB
         - Total: 6.30 MB
       - Total: 6.30 MB
@@ -241,7 +228,7 @@
     - Total: 6.30 MB
     index.db: 103.00 B
     lock: 0.00 B
-    messages.log: 12.78 kB
+    messages.log: 12.04 kB
     neostore: 54.00 B
     neostore.id: 9.00 B
     neostore.nodestore.db: 1.15 MB
@@ -265,13 +252,13 @@
     nioneo_logical.log.1: 16.00 B
     nioneo_logical.log.active: 4.00 B
     tm_tx_log.1: 0.00 B
-2012-12-29 02:34:57.077+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles END ---
-2012-12-29 02:34:57.079+0000: Started - database is now available
-2012-12-29 02:34:57.080+0000: GC Monitor started. 
-2012-12-29 02:34:57.723+0000: Stopping - database is now unavailable
-2012-12-29 02:34:57.723+0000: TM shutting down
-2012-12-29 02:34:57.729+0000: Closed log /Users/mauget/git/railroad-graph-db/load/graphDb/index/lucene.log
-2012-12-29 02:34:57.733+0000: Closed log /Users/mauget/git/railroad-graph-db/load/graphDb/nioneo_logical.log
-2012-12-29 02:34:57.740+0000: NeoStore closed
-2012-12-29 02:34:57.740+0000: --- SHUTDOWN diagnostics START ---
-2012-12-29 02:34:57.740+0000: --- SHUTDOWN diagnostics END ---
+2014-12-02 16:02:14.708+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles END ---
+2014-12-02 16:02:14.709+0000: Started - database is now available
+2014-12-02 16:02:14.710+0000: GC Monitor started. 
+2014-12-02 16:02:15.627+0000: Stopping - database is now unavailable
+2014-12-02 16:02:15.629+0000: TM shutting down
+2014-12-02 16:02:15.632+0000: Closed log /Users/mauget/railroad-graph-db/load/graphDb/nioneo_logical.log
+2014-12-02 16:02:15.639+0000: NeoStore closed
+2014-12-02 16:02:15.643+0000: Closed log /Users/mauget/railroad-graph-db/load/graphDb/index/lucene.log
+2014-12-02 16:02:15.643+0000: --- SHUTDOWN diagnostics START ---
+2014-12-02 16:02:15.643+0000: --- SHUTDOWN diagnostics END ---

@@ -1,8 +1,5 @@
 package com.ramblerag.db.core;
 
-import java.io.File;
-import java.net.URL;
-
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;

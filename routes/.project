@@ -3,6 +3,7 @@
 	<name>routes</name>
 	<comment></comment>
 	<projects>
+		<project>router</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
