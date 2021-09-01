@@ -16,7 +16,7 @@
 		<junit-version>4.13.1</junit-version>
 		<log4j-version>1.2.17</log4j-version>
 		<powermock.version>1.4.12</powermock.version>
-		<spring-version>4.3.20.RELEASE</spring-version>
+		<spring-version>4.3.21.RELEASE</spring-version>
 	</properties>
 
 	<dependencies>
