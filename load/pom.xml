@@ -12,7 +12,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<neo4j-version>3.5.0</neo4j-version>
+		<neo4j-version>5.26.21</neo4j-version>
 		<junit-version>4.13.1</junit-version>
 		<log4j-version>1.2.17</log4j-version>
 		<powermock.version>1.4.12</powermock.version>
